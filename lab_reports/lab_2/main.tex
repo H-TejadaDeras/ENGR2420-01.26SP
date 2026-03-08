@@ -127,40 +127,41 @@
         \includegraphics[width=0.7\linewidth]{../diagrams/lab2_exp2_V_on,_I_on_with_respect_to_R.pdf}
         \caption{The measured values of $I_{on}$ and $V_{on}$ match the predicted values from the relationship derived in the prelab.}\label{fig:v_on,i_on_respect_r}
     \end{figure}
-
+    The measured values of $V_{on}$ and $I_{on}$ fit in the theoretical plots. They vary as we expected based on a change of resistance, $R$
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\linewidth]{../diagrams/lab2_exp2_V_in_vs_I_in_120Ohm.pdf}
+        \caption{Input voltage vs input current for a 120~$\Omega$ load.}\label{fig:vin_vs_iin_120Ohm}
+    \end{figure}
 
     \begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.32\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{../diagrams/lab2_exp2_V_in_vs_I_in_120Ohm.pdf}\label{fig:vin_vs_iin_120Ohm}
-    \end{subfigure}
-    \begin{subfigure}{0.32\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{../diagrams/lab2_exp2_V_in_vs_I_in_10kOhm.pdf}\label{fig:vin_vs_iin_10kOhm}
-    \end{subfigure}
-        \begin{subfigure}{0.32\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{../diagrams/lab2_exp2_V_in_vs_I_in_200kOhm.pdf}\label{fig:vin_vs_iin_200kOhm}
-    \end{subfigure}
-    \caption{(a, b, c).}
+        \includegraphics[width=0.7\linewidth]{../diagrams/lab2_exp2_V_in_vs_I_in_10kOhm.pdf}
+        \caption{Input voltage vs input current for a 10~k$\Omega$ load.}\label{fig:vin_vs_iin_10kOhm}
     \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\linewidth]{../diagrams/lab2_exp2_V_in_vs_I_in_200kOhm.pdf}
+        \caption{Input voltage vs input current for a 200~k$\Omega$ load.}\label{fig:vin_vs_iin_200kOhm}
+    \end{figure}
+    The two regimes of operation are apparent as predicted through the equations derived from the prelab. The equations accurately describe how the change in voltage across the resistor dominates after the $(V_{on}, I_{on})$ point and the change in voltage across the transistor dominates earlier. As you can see from the plots, each one contains both regimes and are both separated by whether the $(V_{on}, I_{on})$ point has been passed.
 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\linewidth]{../diagrams/lab2_exp2_V_in_vs_I_in.pdf}
-        \caption{}
-        \label{fig:circuit_i_in_vs_v_in}
+        \caption{Input current to the circuit with respect to the input voltage to the circuit. The relationship matches the theoretical.}\label{fig:circuit_i_in_vs_v_in}
     \end{figure}
+    The 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\linewidth]{../diagrams/lab2_exp2_V_in_vs_V_q.pdf}
-        \caption{}
-        \label{fig:v_in_vs_v_q}
+        \caption{Voltage measured across the transistor with three different resistor values against the input voltage with best fit lines along the steady states.}\label{fig:v_in_vs_v_q}
     \end{figure}
 	\subsection{Analysis}
+    From the data we gathered, we observed the distinct regimes of influence in the change in voltage. For the plot with a resistance of 120 $\Omega$, we observed the current increasing linearly after the $(V_{on}, I_{on})$ point until the current outputted from the SMU limitted the linear increase. For all the other plots, this did not happen and matched our theoretical results well.
 	\subsection{Discussion}
-
+    We got 101 data points for each plot. In hindsight, this was not nearly enough measurements and contributed to the close linear approximations in the plot comparing the input voltage to the input current of the circuit. Other than that, everything else came out well and was consistent with the theoretical equations we derived from the prelab.
 
 %----------------------------------------------------------
 

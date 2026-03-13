@@ -7,21 +7,6 @@ Ic100k = Iout100k - Ib100k;
 
 %% Collector current comparison 
 
-Ic_exp1 = Iout - Ib;
-
-figure
-semilogy(Vb, Ic_exp1, '.', 'DisplayName','No emitter resistor')
-hold on
-semilogy(Vb1k,   Ic1k,   '.', 'DisplayName','1kΩ')
-semilogy(Vb10k,  Ic10k,  '.', 'DisplayName','10kΩ')
-semilogy(Vb100k, Ic100k, '.', 'DisplayName','100kΩ')
-
-title('Collector Current vs Base Voltage')
-xlabel('Base Voltage (V)')
-ylabel('Collector Current (A)')
-legend('Location','best')
-
-
 
 Ic_exp1 = Iout - Ib;
 
@@ -187,11 +172,11 @@ m = fGm1.p1;
 Gm_fit1 = A*Ic1k.^m;
 loglog(Ic1k, Gm_fit1,'DisplayName','Linear Fit (log-log)')
 
-text(0.05,0.90,sprintf('Linear fit slope m = %.2f',m),'Units','normalized')
+text(0.05,0.90,sprintf('Linear fit slope m = %.2f ℧',m),'Units','normalized')
 
 title('Incremental Transconductance vs Collector Current (1kΩ)')
 xlabel('Collector Current (A)')
-ylabel('G_m (S)')
+ylabel('G_m (℧)')
 legend('Location','best')
 
 %% gm vs Ic (10k)
@@ -208,11 +193,11 @@ m = fGm2.p1;
 Gm_fit2 = A*Ic10k.^m;
 loglog(Ic10k, Gm_fit2,'DisplayName','Linear Fit (log-log)')
 
-text(0.05,0.90,sprintf('Linear fit slope m = %.2f',m),'Units','normalized')
+text(0.05,0.90,sprintf('Linear fit slope m = %.2f ℧',m),'Units','normalized')
 
 title('Incremental Transconductance vs Collector Current (10kΩ)')
 xlabel('Collector Current (A)')
-ylabel('G_m (S)')
+ylabel('G_m (℧)')
 legend('Location','best')
 
 %% gm vs Ic (100k)
@@ -229,9 +214,9 @@ m = fGm3.p1;
 Gm_fit3 = A*Ic100k.^m;
 loglog(Ic100k, Gm_fit3,'DisplayName','Linear Fit (log-log)')
 
-text(0.05,0.90,sprintf('Linear fit slope m = %.2f',m),'Units','normalized')
+text(0.05,0.90,sprintf('Linear fit slope m = %.2f ℧',m),'Units','normalized')
 
 title('Incremental Transconductance vs Collector Current (100kΩ)')
 xlabel('Collector Current (A)')
-ylabel('G_m (S)')
+ylabel('G_m (℧)')
 legend('Location','best')

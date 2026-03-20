@@ -46,7 +46,7 @@
 
 \institution{Franklin W. Olin College of Engineering}
 \footinfo{Intro Microelectronic Circuits with Laboratory}
-\theday{TBD}
+\theday{March 13, 2026}
 \leadauthor{Mahesh et. al.}
 
 %----------------------------------------------------------
@@ -60,6 +60,7 @@
     % \linenumbers 
     
 %----------------------------------------------------------
+
 % 2 - 1k 10k 100k
 % 3 - 1k
 % 4 - 1k (emitter and GND), 10k, 5k, 2k (5V and collecter)
@@ -70,32 +71,54 @@
    		\includegraphics[width=0.6\linewidth]{../diagrams/lab3_c1.pdf}
    		\caption{The schematic for the experimental setups used in Experiment 1.}\label{fig:exp1_diag}
 	\end{figure}
+	We used the above setup to run this experiment. The 5 V voltage source provided a consistent 5 V and also measured the current it was supplying to maintain the 5 V. The Vb voltage source outputted a variable voltage and supplied the necessary current to maintain that voltage. The Vb voltage source allowed us to get data from a variety of base voltages for the BJT. This Vb voltage source is our base voltage which is also the base-emitter voltage of the BJT since the emitter voltage is equal to 0 V.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp1_BJT_Current_Characteristics.pdf}
-		\caption{caption here}
+		\includegraphics[width=0.6\linewidth]{../diagrams/lab3_exp1_BJT_Current_Characteristics.pdf}
+		\caption{Base and Collector Current Characteristics of a BJT with respect to the Base Voltage (with respect to an emitter voltage of 0 V).}
 		\label{fig:bjt_current_char}
 	\end{figure}
+	This graph shows us how the collector and base currents change with respect to the base voltage of the BJT. There was a weird drop in collector current around the 0.45 V base voltage mark. We think it is caused by an issue with the SMU in which some feedback the current measuring circuits received caused a misread in the actual current. Other than that, the data looks well and it looks like a mostly exponential relationship between the currents and the base voltage.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp1_BJT_Current_Gain_Characteristics.pdf}
-		\caption{caption here}
+		\includegraphics[width=0.6\linewidth]{../diagrams/lab3_exp1_BJT_Current_Gain_Characteristics.pdf}
+		\caption{Current Gain with respect to Base Current.}
 		\label{fig:bjt_current_gain_char}
 	\end{figure}
+	This graph shows us the current gain, $\beta$, value with respect to the base current, $I_b$. There are a few discontinuities in the data due to the very small currents used and measurement error in that scale being very large due to noise and leakage currents. There was one data point around a base current of $10^{-10}$ that was around 3000. This data point was omitted to make the graph more readable.
+	The current gain value was calculated using the following equation:
+	\[\beta=\frac{I_c}{I_b}\]
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp1_BJT_Incremental_Resistance_Characteristics.pdf}
-		\caption{caption here}
+		\includegraphics[width=0.6\linewidth]{../diagrams/lab3_exp1_BJT_Incremental_Resistance_Characteristics.pdf}
+		\caption{Incremental Resistance with respect to Base Current.}
 		\label{fig:bjt_incremental_resistance_char}
 	\end{figure}
+	This graph shows the incremental resistance of the base terminal with respect to the base current. The graph shows that this is generally a negative exponential relationship. The resistance decreases as the current flowing through the terminal increases.
+	The incremental resistance of the base terminal was calculated using the following equation:
+	\[r_b=\frac{\partial V_b}{\partial I_b}\]
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp1_BJT_Incremental_Transconductance_Characteristics.pdf}
-		\caption{caption here}
+		\includegraphics[width=0.6\linewidth]{../diagrams/lab3_exp1_BJT_Incremental_Transconductance_Characteristics.pdf}
+		\caption{Incremental Transconductance with respect to Collector Current.}
 		\label{fig:bjt_incremental_transconductance_char}
 	\end{figure}
+	This graph shows the incremental transconductance of the BJT with respect to the collector current. The incremental transconductance describes how much the collector current changes for a given increase in base current. This graph shows how that incremental transconductance (also referred to as transconductance gain) changes as the collector current increases. As the collector current increases, so does the transconductance.
+	The incremental transconductance of the BJT was calculated using the following equation:
+	\[g_m=\frac{\partial I_c}{\partial V_b}\]
 	\subsection{Analysis}
+	% Does the collector current follow an exponential relationship with the base voltage?
+	From Figure \ref{fig:bjt_current_char}, we observe that the base and collector current follow and exponential relationship with the base voltage for most of the measured base voltage values. When the base voltage becomes very small, close to the $V_{sat}$ value for that particular junction.\\
+	% Is the current gain constant with base current? If not, under what circumstances would it be reasonable to assume it to be constant?
+	From Figure \ref{fig:bjt_current_gain_char}, we observe that the current gain with respect to the base current is relatively constant for currents greater than $10^{-8}$ A. For those base currents, we can reasonably assume that the current gain is constant. For smaller base currents, we can no longer make that assumption as the current gain starts to deviate significantly from the value when the base current is around $10^{-8}$ A.\\
+	% Does the theoretical fit match the data (Incremental Resistance)?
+	From Figure \ref{fig:bjt_incremental_resistance_char}, we observe that the theoretical fit matches very well to the measured data. This is especially true once the base current is greater than $10^{-8}$ A. For currents smaller than $10^{-8}$ A, the incremental resistance starts to deviate from the theoretical fit. The theoretical fit used is represented in the following equation:
+	\[r_b=\frac{U_T}{I_b}\]
+	% Does the theoretical fit match the data (Incremental Transconductance)?
+	From Figure \ref{fig:bjt_incremental_transconductance_char}, we observe that the theoretical fit matches the measured data very well for a collector current greater than $10^{-8}$ A. There are a few outliners throughout the data, especially around $10^{-7}$ A. Overall, the theoretical fit matches the measured data very well. The theoretical fit used is represented in the following equation:
+	\[g_m=\frac{\partial I_c}{\partial V_b}\]
 	\subsection{Discussion}
+	From the experiment, we observe that overall the predictions made by the model matches pretty well for currents greater than $10^{-8}$ A. At currents smaller than $10^{-8}$ A, the data is distorted due to leakage currents in the SMU, BJT, and breadboard. The data is also distorted at those small currents due to the SMU not having enough resolution to accurately measure such small currents.
 \section{Emitter-Degenerated Bipolar Characteristics}
 	\subsection{Results}
 	\begin{figure}[H]
@@ -112,7 +135,7 @@
    		\includegraphics[width=0.6\linewidth]{../diagrams/lab3_c3.pdf}
    		\caption{The schematic for the experimental setups used in Experiment 3. An R values of 1k$\Omega$ was used.}\label{fig:exp3_diag}
     \end{figure}
-	After connecting the diode-connected transistor in the emitter-follower configuration as shown in \ref{fig:exp3_diag}., we measured the voltage transfer characteristic (VTC) of the circuit by sweeping the input voltage (Vin) and recording the corresponding output voltage (Vout). The VTC was plotted as Vout versus Vin, and a theoretical fit was also included for comparison. The plot is shown in Figure \ref{fig:exp3_plot1}.\\
+	After connecting the diode-connected transistor in the emitter-follower configuration as shown in Figure \ref{fig:exp3_diag}, we measured the voltage transfer characteristic (VTC) of the circuit by sweeping the input voltage (Vin) and recording the corresponding output voltage (Vout). The VTC was plotted as Vout versus Vin, and a theoretical fit was also included for comparison. The plot is shown in Figure \ref{fig:exp3_plot1}.\\
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp3_plt1.pdf}
@@ -131,17 +154,22 @@
 	\begin{figure}[H]
  		\centering
    		\includegraphics[width=0.6\linewidth]{../diagrams/lab3_c4.pdf}
-   		\caption{The schematic for the experimental setups used in Experiment 4. An R value of 1k$\Omega$, and mR values of 10k$\Omega$, 5k$\Omega$, and 2k$\Omega$ were used.}\label{fig:exp4_diag}
+   		\caption{The schematic for the experimental setups used in Experiment 4. An R value of 1 k$\Omega$, and mR values of 10 k$\Omega$, 5 k$\Omega$, and 2 k$\Omega$ were used.}\label{fig:exp4_diag}
 	\end{figure}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp4.pdf}
-		\caption{caption here}
-		\label{fig:thing}
+		\caption{Voltage Transfer Characteristic of a Common-Emitter Amplifier.}
+		\label{fig:cea_vtc}
 	\end{figure}
+	In the graph above, we observe that the common-emitter amplifier circuits all reach the common-collector amplifier behavior line and then start to follow that line for all subsequent voltages. The difference between the circuits is shown by the steepness of the inverting amplification done by the circuit where a 10:1 ratio has a large gain over a small range of voltages and a 2:1 ratio has a comparatively small gain over a larger range of voltages.
 	\subsection{Analysis}
+	% For each collector resistor, what is the incremental voltage gain of the amplifier? What determines this voltage gain?
+	When the mR resistor is equal to 10 k$\Omega$, the incremental voltage gain is about -8.2. This is very close to the 10:1 ratio between the mR and R resistors. This implies that this ratio is the cause of the negative voltage gain of the circuit.\\
+	When the mR resistor is equal to 5 k$\Omega$, the incremental voltage gain is about -4.4. Again this is very close to the 5:1 ratio between the mR and R resistors.\\
+	When the mR resistor is equal to 2 k$\Omega$, the incremental voltage gain is about -1.9. This is also very close to the 2:1 ratio between the mR and R resistors.
 	\subsection{Discussion}
-
+	Based on the fitted lines and data, we can conclude that the ratio between the mR and R resistors is the cause of the incremental voltage gain of the circuit. The discrepancies observed in the data likely come from the tolerances of the resistors which is $\pm$ 5\%.
 %----------------------------------------------------------
 
 \end{document}

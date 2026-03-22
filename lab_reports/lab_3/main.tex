@@ -120,14 +120,153 @@
 	\subsection{Discussion}
 	From the experiment, we observe that overall the predictions made by the model matches pretty well for currents greater than $10^{-8}$ A. At currents smaller than $10^{-8}$ A, the data is distorted due to leakage currents in the SMU, BJT, and breadboard. The data is also distorted at those small currents due to the SMU not having enough resolution to accurately measure such small currents.
 \section{Emitter-Degenerated Bipolar Characteristics}
-	\subsection{Results}
-	\begin{figure}[H]
- 		\centering
-   		\includegraphics[width=0.6\linewidth]{../diagrams/lab3_c2.pdf}
-   		\caption{The schematic for the experimental setups used in Experiment 2. R values of 1k$\Omega$, 10k$\Omega$, and 100k$\Omega$ were used.}\label{fig:exp2_diag}
-    \end{figure}
-	\subsection{Analysis}
-	\subsection{Discussion}
+
+\subsection{Results}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../diagrams/lab3_c2.pdf}
+    \caption{The schematic for the experimental setups used in Experiment 2. R values of 1k$\Omega$, 10k$\Omega$, and 100k$\Omega$ were used.}
+    \label{fig:exp2_diag}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_1.pdf}
+    \caption{Collector current versus base voltage for four configurations: no emitter resistor, 1k$\Omega$, 10k$\Omega$, and 100k$\Omega$. The no-resistor case includes a linear fit on a semilog plot for comparison.}
+    \label{fig:exp20}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_2.pdf}
+    \caption{Collector current vs.\ base voltage for $R=1$k$\Omega$ with a linear fit in the region where the curve becomes approximately straight. The fitted slope is $9.691\times10^{-4}$~$\mathrm{\mho}$.}
+    \label{fig:exp21}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_3.pdf}
+    \caption{Collector current vs.\ base voltage for $R=10$k$\Omega$ with a linear fit. The fitted slope is $9.740\times10^{-5}$~$\mathrm{\mho}$.}
+    \label{fig:exp22}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_4.pdf}
+    \caption{Collector current vs.\ base voltage for $R=100$k$\Omega$ with a linear fit. The fitted slope is $1.000\times10^{-5}$~$\mathrm{\mho}$.}
+    \label{fig:exp23}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_5.pdf}
+    \caption{Incremental base resistance $r_b$ vs.\ base current for $R=1$k$\Omega$ on a log--log scale. Linear fit slope: $-0.82$.}
+    \label{fig:exp24}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_6.pdf}
+    \caption{Incremental base resistance $r_b$ vs.\ base current for $R=10$k$\Omega$ on a log--log scale. Linear fit slope: $-0.58$.}
+    \label{fig:exp25}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_7.pdf}
+    \caption{Incremental base resistance $r_b$ vs.\ base current for $R=100$k$\Omega$ on a log--log scale. Linear fit slope: $-0.24$.}
+    \label{fig:exp26}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_8.pdf}
+    \caption{Incremental transconductance $G_m$ vs.\ collector current for $R=1$k$\Omega$ on a log--log scale. Linear fit slope: $0.99$.}
+    \label{fig:exp27}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_9.pdf}
+    \caption{Incremental transconductance $G_m$ vs.\ collector current for $R=10$k$\Omega$ on a log--log scale. Linear fit slope: $0.91$.}
+    \label{fig:exp28}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../diagrams/lab3_exp2_10.pdf}
+    \caption{Incremental transconductance $G_m$ vs.\ collector current for $R=100$k$\Omega$ on a log--log scale. Linear fit slope: $0.86$.}
+    \label{fig:exp29}
+\end{figure}
+
+\subsection{Analysis}
+
+The collector-current curves in Fig.~\ref{fig:exp20} show that adding an emitter resistor 
+reduces how strongly the collector current responds to changes in base voltage. 
+With no emitter resistor, the current rises sharply as the base voltage increases. 
+As the emitter resistance increases, the curve becomes noticeably flatter. 
+This behavior means that the emitter resistor introduces local negative feedback 
+that limits how much the collector current can change for a given change in base voltage.
+
+Figures~\ref{fig:exp21}--\ref{fig:exp23} quantify this behavior. 
+Each show a region where the collector current varies approximately 
+linearly with base voltage. The slope of this region decreases by around 
+a factor of ten each time the emitter resistor increases by a factor of ten. 
+The measured slopes are approximately $9.7\times10^{-4}$~$\mho$, $9.7\times10^{-5}$~$\mho$, 
+and $1.0\times10^{-5}$~$\mho$ for $R=1$k$\Omega$, $10$k$\Omega$, and $100$k$\Omega$.
+Because this slope corresponds to the incremental transconductance of the circuit, this scaling 
+is consistent with the expected effective transconductance for an emitter-degenerated transistor,
+
+\[
+G_{m,\text{eff}} \approx \frac{1}{R + r_e},
+\]
+
+where $r_e$ is the small-signal emitter resistance of the transistor.
+When the emitter resistor is much larger than $r_e$, this 
+expression approaches $G_{m,\text{eff}} \approx 1/R$, 
+which explains why the measured slopes scale inversely with the emitter resistance.
+
+Figures~\ref{fig:exp24}--\ref{fig:exp26} show the incremental base resistance $r_b$ 
+as a function of base current. The measured $r_b$ decreases with increasing base current, 
+and the log--log slope becomes less negative as the emitter resistor increases. 
+This behavior is consistent with the increase in effective input resistance caused by emitter degeneration,
+
+\[
+r_{b,\text{eff}} \approx \beta (R + r_e).
+\]
+
+As the emitter resistor becomes larger, 
+the term $\beta R$ begins to dominate the effective base resistance,
+ making $r_b$ less dependent on the base current.
+This causes the log--log slope of $r_b$ versus $I_b$ to move 
+closer to zero as the emitter resistance increases.
+
+Finally, Figs.~\ref{fig:exp27}--\ref{fig:exp29} show that the 
+incremental transconductance $G_m$ increases with collector current. 
+The log--log slopes are close to 1 for all resistor values, meaning a roughly proportional 
+relationship between $G_m$ and the collector current $I_C$. 
+This is consistent with the intrinsic transistor relationship 
+between transconductance and collector current, which remainsstays approximately 
+proportional even when emitter degeneration is present.
+
+\subsection{Discussion}
+
+Emitter degeneration introduces local negative feedback into the transistor circuit, 
+and the measured data clearly shows its effects. 
+Increasing the emitter resistance reduces the slope of the $I_C$--$V_B$ characteristics, 
+indicating a reduction in the effective transconductance of the circuit. 
+At the same time, the effective base resistance increases due to the additional 
+resistance reflected into the base by the transistor gain.
+
+The measurements also show that the transconductance 
+curves shift downward as the emitter resistor increases, 
+while maintaining an approximately proportional relationship 
+between $G_m$ and $I_C$. Overall, the experimental data follows the 
+expected theoretical trends for an emitter-degenerated bipolar transistor.
+Error at very small currents are most likely due to SMU resolution limits 
+and leakage currents in the measurement setup.
+
 \section{Follower Voltage Transfer Characteristics}
 	\subsection{Results}
 	\begin{figure}[H]

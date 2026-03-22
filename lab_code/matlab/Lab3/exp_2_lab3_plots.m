@@ -45,7 +45,7 @@ f1 = fit(Vb1k(idx)', Ic1k(idx)', 'poly1');
 Ic_fit1 = f1.p1*Vb1k + f1.p2;
 plot(Vb1k, Ic_fit1, 'DisplayName','Linear Fit')
 
-text(0.05,0.90,sprintf('Linear fit slope (G_m) = %.3e S',f1.p1),'Units','normalized')
+text(0.05,0.90,sprintf('Linear fit slope (G_m) = %.3e ℧',f1.p1),'Units','normalized')
 
 legend("Location","best")
 
@@ -63,7 +63,7 @@ f2 = fit(Vb10k(idx)', Ic10k(idx)', 'poly1');
 Ic_fit2 = f2.p1*Vb10k + f2.p2;
 plot(Vb10k, Ic_fit2, 'DisplayName','Linear Fit')
 
-text(0.05,0.90,sprintf('Linear fit slope (G_m) = %.3e S',f2.p1),'Units','normalized')
+text(0.05,0.90,sprintf('Linear fit slope (G_m) = %.3e ℧',f2.p1),'Units','normalized')
 
 legend("Location","best")
 
@@ -81,7 +81,7 @@ f3 = fit(Vb100k(idx)', Ic100k(idx)', 'poly1');
 Ic_fit3 = f3.p1*Vb100k + f3.p2;
 plot(Vb100k, Ic_fit3, 'DisplayName','Linear Fit')
 
-text(0.05,0.90,sprintf('Linear fit slope (G_m) = %.3e S',f3.p1),'Units','normalized')
+text(0.05,0.90,sprintf('Linear fit slope (G_m) = %.3e ℧',f3.p1),'Units','normalized')
 
 legend("Location","best")
 

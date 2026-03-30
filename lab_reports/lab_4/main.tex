@@ -65,13 +65,13 @@
 
 \section{Input/Gate Characteristics}
 	\subsection{Results}
-
 	\begin{figure}[H]
  		\centering
    		\includegraphics[width=0.6\linewidth]{../diagrams/lab4_exp1_circuit.pdf}
    		\caption{The schematic for the experimental setups used in Experiment 1. Each of the four ALD1106 transistors were used.}\label{fig:exp1_diag}
 	\end{figure}
-	\begin{table}[h]
+	The circuit we made was a diode-connected nMOSFET. In this experiment, we measured the current-voltage characteristics of the MOSFET in this configuration.
+	\begin{table}[H]
 		\centering
 		\begin{tabular}{c c c c}
 		\toprule
@@ -86,8 +86,36 @@
 		\caption{Extracted MOSFET parameters for the four devices under test.}
 		\label{tab:mosfet_parameters}
 	\end{table}
+	Above is a summary of the four nMOSFETs that we tested that were all in the ALD1106 chip. We extracted the values using the EKV model. Overall, the values are very close to each other and match very well.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{../diagrams/lab4_exp1_MOSFET_IV_Characteristics.pdf}
+		\caption{Current-Voltage characteristic of the nMOSFETs. Notice how the data indicates that all of them are almost identical to each other.}
+		\label{fig:mosfet_iv}
+	\end{figure}
+	Above is the current-voltage characteristics of the nMOSFETs we obtained in the ALD1106 chip. The data indicates that all of the MOSFETs are very similar to each other. In addition, the EKV model prediction fits very well to the data.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{../diagrams/lab4_exp1_MOSFET_IV_Characteristics_Variation.pdf}
+		\caption{Variation in current characteristics across the 4 nMOSFETs in the ALD1106 chip. Notice how there is little variation at higher currents and large amounts of variation in lower currents.}
+		\label{fig:mosfet_iv_var}
+	\end{figure}
+	Above is the variation in drain-source current in the nMOSFETs as a function of average drain-source current. There is more variation the lower the drain-source current is flowing through the nMOSFET.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{../diagrams/lab4_exp1_MOSFET_Transconductance_Gain.pdf}
+		\caption{Transconductance Gain as a function of Drain-Source Current.}
+		\label{fig:mosfet_transconductance_gain}
+	\end{figure}
+	The nMOSFET transconductance gain as a function of drain-source current. The EKV model matches reality very well until the drain-source voltage drops below $1\cdot10^{-9}$ V.
 	\subsection{Analysis}
+	Overall, the current-voltage characteristics match very well to the EKV model except for very small gate voltages (as seen by the deviation between the data and the prediction by the EKV model near the bottom right of the plot in Figure \ref{fig:mosfet_iv}). The variation in the Drain-Source currents between the respective MOSFETs are almost none at higher currents compared to lower currents as seen in Figure \ref{fig:mosfet_iv_var}. As for the transconductance gain, at lower Drain-Source currents, the data deviates from the model a lot as seen in Figure \ref{fig:mosfet_transconductance_gain}.\\
+	\\
+	Between the data comparing the transistors to each other (see Figure \ref{fig:mosfet_iv} and Figure \ref{fig:mosfet_iv_var}), you can see that the transistors start to deviate from each other in lower currents and voltages and are pretty uniform with each other at higher currents and voltages. This is because at lower voltages, the transistors are at weak inversion and any slight variations affect the behavior of the MOSFET more in this region of inversion compared to stronger regions of inversion.\\
+	\\
+	For the transconductance gain of the MOSFET, it generally matched the model until the Drain-Source currents started reaching the Nanoamp range. The theoretical fit predicted values above and below the measured data throughout the current range. We think that this may be the case due to the MOSFET not being in saturation in lower currents (and the EKV model was designed to predict in the saturation range).
 	\subsection{Discussion}
+	In general, the predictions made by the EKV model match the data at higher current and voltage levels. At higher voltage levels and current levels, the level of inversion is higher. In the case of the higher voltages, we are specifically referring to the Gate-Source voltage which largely determines the width of the channel; therefore the larger the Gate-Source voltage, the stronger the inversion and the better the model matches the data. The opposite is also true. In terms of current, at larger currents, the channel is larger and therefore there is more inversion happening and vice versa. This helps explain why the data at lower currents deviates from the model; lower currents mean that the inversion level is low and that means that the MOSFET is no longer in the saturation region, it is in the ohmic region. In summary, the higher the voltages and currents, the better the data matches the model prediction and vice versa.
 \section{Current Transfer Characteristics}
 	\subsection{Results}
 	\begin{figure}[H]

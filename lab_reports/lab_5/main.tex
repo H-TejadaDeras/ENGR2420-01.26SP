@@ -14,6 +14,7 @@
 
 \documentclass[9pt,a4paper,column,twoside]{tau-class/tau}
 \usepackage[english]{babel}
+\usepackage{amssymb} % Required for the \mho symbol
 
 %% Spanish babel recomendation
 % \usepackage[spanish,es-nodecimaldot,es-noindentfirst]{babel} 
@@ -52,7 +53,7 @@
 %----------------------------------------------------------
 
 \begin{document}
-		
+        
     \maketitle 
     \thispagestyle{firststyle} 
     % \tauabstract 
@@ -62,27 +63,64 @@
 %----------------------------------------------------------
 
 \section{Differential Pair Current–Voltage Characteristics}
-	\subsection{Results}
+    \subsection{Results}
     \begin{figure}[H]
-		\centering
-		\includegraphics[width=0.6\linewidth]{../diagrams/lab5-diagram1.pdf}
-	\caption{Experimental setup for the first part of Experiment 1.}\label{fig:cd1}
-	\end{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab5-diagram1.pdf}
+    \caption{Experimental setup for the first part of Experiment 1.}\label{fig:cd1}
+    \end{figure}
 
     \begin{figure}[H]
-		\centering
-		\includegraphics[width=0.6\linewidth]{../diagrams/lab5_diagram2.pdf}
-	\caption{Experimental setup for the second part of Experiment 1.}\label{fig:cd2}
-	\end{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab5_diagram2.pdf}
+    \caption{Experimental setup for the second part of Experiment 1.}\label{fig:cd2}
+    \end{figure}
 
     \begin{figure}[H]
-		\centering
-		\includegraphics[width=0.6\linewidth]{../diagrams/lab5-diagram3.pdf}
-	\caption{Experimental setup for the third part of Experiment 1.}\label{fig:cd3}
-	\end{figure}
-	\subsection{Analysis}
-	\subsection{Discussion}
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab5-diagram3.pdf}
+    \caption{Experimental setup for the third part of Experiment 1.}\label{fig:cd3}
+    \end{figure}
 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../diagrams/lab5_exp1_IV_characteristics.pdf}
+    \caption{Drain currents $I_1, I_2$, differential current $I_1 - I_2$, and tail current $I_1 + I_2$ vs. differential input $V_1 - V_2$ for $V_b = 0.6$ V.}\label{fig:plot_iv_low}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../diagrams/lab5_exp1_common-source_node_voltage_characteristics.pdf}
+    \caption{Common-source node voltage $V$ vs. $V_1$ for varying $V_2$ at $V_b = 0.6$ V, illustrating the tracking behavior of the source node.}\label{fig:plot_vsource}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../diagrams/lab5_exp1_incremental_transconductance_gain.pdf}
+    \caption{Extraction of the incremental transconductance gain $G_{dm}$ via linear regression of the $I_1 - I_2$ curve near the origin.}\label{fig:plot_gdm}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{../diagrams/lab5_exp1_IV_characteristics_V_b_1.5V.pdf}
+    \caption{Current-voltage characteristics for the nMOS differential pair in strong inversion ($V_b = 1.5$ V).}\label{fig:plot_iv_high}
+    \end{figure}
+
+\subsection{Analysis}
+
+The nMOS differential pair was characterized for two bias conditions: near threshold ($V_b = 0.6$ V) and above threshold ($V_b = 1.5$ V). 
+At $V_b = 0.6$ V (Figure \ref{fig:plot_iv_low}), the currents $I_1$ and $I_2$ depend primarily on the differential input $V_1 - V_2$. The curves for different $V_2$ values overlap closely, indicating a high common-mode rejection. The total current $I_1 + I_2$ remains approximately constant at $1.65\,\mu\text{A}$, consistent with a stable tail current.
+The common-source node voltage $V$ (Figure \ref{fig:plot_vsource}) remains roughly constant when $V_1 < V_2$ (following the constant $V_2$) and increases linearly with $V_1$ once $V_1 > V_2$, as the source node tracks the gate of the active transistor to maintain a constant $V_{gs}$.
+The differential-mode transconductance was extracted from the slope of $I_1 - I_2$ near $V_1 = V_2$:
+\[
+G_{dm} = \left.\frac{\partial (I_1 - I_2)}{\partial (V_1 - V_2)}\right|_{V_1 = V_2}
+\]
+For $V_b = 0.6$ V, $G_{dm} \approx 16\,\mu\mho$. As shown by the nearly identical slopes in Figure \ref{fig:plot_gdm}, this value of differential-mode transconductance gain does not change significantly as $V_2$ changes. At $V_b = 1.5$ V (Figure \ref{fig:plot_iv_high}), the tail current increases to approximately $307\,\mu\text{A}$, resulting in a significantly higher $G_{dm}$ of about $0.49\,\text{m}\mho$ and a wider linear input range.
+\subsection{Discussion}
+
+The results confirm that the differential pair responds mostly to $V_1 - V_2$, with little dependence on common-mode voltage. This is supported by the overlap of $I_1 - I_2$ curves across different $V_2$ values and the nearly constant $I_1 + I_2$.
+Small changes in $I_1 + I_2$ at large input differences likely occur when the bias transistor leaves saturation or the input devices enter the ohmic region.
+Increasing $V_b$ from near-threshold to strong inversion increases both the tail current and $G_{dm}$, while also expanding the linear range. However, this comes at the cost of higher power consumption and reduced allowable common-mode range due to larger required $V_{gs}$.
 %----------------------------------------------------------
 
 \end{document}

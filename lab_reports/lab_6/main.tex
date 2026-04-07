@@ -60,19 +60,108 @@
     
 %----------------------------------------------------------
 
-\section{Voltage Transfer Characteristics}
-	\subsection{Results}
-	\subsection{Analysis}
-	\subsection{Discussion}
-\section{Transconductance, Output Resistance, and Gain}
-	\subsection{Results}
-	\subsection{Analysis}
-	\subsection{Discussion}
-\section{Unity-Gain Follower}
-	\subsection{Results}
-	\subsection{Analysis}
-	\subsection{Discussion}
 
-%----------------------------------------------------------
+\section{Voltage Transfer Characteristics}
+\subsection{Results}
+     \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_exp1_diagram.pdf}
+    \caption{Schematic diagram of the simple MOS differential amplifier used to measure voltage transfer characteristics.}\label{fig:exp1}
+    \end{figure}
+
+    
+     \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_exp1_SI.pdf}
+    \caption{Voltage transfer characteristics of the differential amplifier biased in strong inversion at $V_2 = 2.5\text{ V}$, $3.5\text{ V}$, and $4.5\text{ V}$.}\label{fig:exp1_SI}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_exp1_WI.pdf}
+    \caption{Voltage transfer characteristics of the differential amplifier biased in weak/moderate inversion at $V_2 = 2.5\text{ V}$, $3.5\text{ V}$, and $4.5\text{ V}$.}\label{fig:exp1_WI}
+    \end{figure}
+
+    \subsection{Analysis}
+    The measured voltage transfer characteristics in both strong inversion and weak/moderate inversion show
+	four distinct operating regions as $V_1$ is swept from $0\text{ V}$ to $5\text{ V}$. 
+	Initially, $V_{out}$ remains at around $0\text{ V}$. 
+	As $V_1$ increases past the bias threshold, the output voltage begins to rise, proportional to $\kappa(V_1 - V_b)$. 
+	As $V_1$ approaches the constant reference voltage $V_2$, the circuit enters its high-gain region,
+	characterized by a steep slope where a small change in $V_1$ produces a large change in $V_{out}$. 
+	Finally, when $V_1$ becomes greater than $V_2$, the output saturates and flattens out near the positive supply rail, $V_{dd}$.
+    
+    \subsection{Discussion}
+    Comparing the two VTC plots shows a difference in behavior depending on the biasing regime. 
+	When biased in weak/moderate inversion, the transition through the high-gain region 
+	($V_1 \approx V_2$) is noticeably sharper and more abrupt than in strong inversion. 
+	In strong inversion, this transition is smoother and spans a slightly wider range of input voltages. 
+	The plots show that the differential amplifier cannot pull its output voltage completely down to ground once it enters the active region. 
+	This limitation is caused by the tail current bias transistor ($M_b$) requiring a minimum voltage drop to remain saturated, thus imposing a lower limit on $V_{out}$ of approximately $\kappa(V_1 - V_b)$.
+\section{Transconductance, Output Resistance, and Gain}
+    \subsection{Results}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_diagram_exp2_1.pdf}
+    \caption{Schematic setup for measuring the incremental differential-mode voltage gain.}\label{fig:exp2_1}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_diagram_exp2_2.pdf}
+    \caption{Schematic setup for measuring the output current to determine incremental output resistance.}\label{fig:exp2_2}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_diagram_exp2_3.pdf}
+    \caption{Schematic setup for measuring the short-circuit output current to determine the incremental transconductance gain.}\label{fig:exp2_3}
+    \end{figure}
+    
+    \subsection{Analysis}
+    \subsection{Discussion}
+
+\section{Unity-Gain Follower}
+    \subsection{Results}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_exp3_diagram.pdf}
+    \caption{Schematic diagram of the differential amplifier as a unity-gain follower.}\label{fig:exp3}
+    \end{figure}
+
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_exp3_unity_gain.pdf}
+    \caption{Voltage transfer characteristic of the unity-gain follower configuration, showing a measured incremental gain of 0.985.}\label{fig:exp3_UG}
+    \end{figure}
+
+	\subsection{Analysis}
+	By connecting the output to the inverting input terminal, the differential 
+	amplifier was turned into a unity-gain follower. Sweeping $V_{in}$ from rail 
+	to rail created a linear relationship between the input and 
+	output voltages over most of the operating range. 
+	To estimate the incremental gain, a line of best fit was applied to the linear 
+	portion of the measured data, excluding the regions near the voltage rails 
+	where clipping occurs. The resulting slope of the best fit line gives a 
+	measured gain of $0.985$. 
+	Noticeable clipping occurs near the lower bound of the sweep (below 
+	$\approx 0.3\,\text{V}$) and near the upper bound (above $\approx 4.5\,\text{V}$), 
+	where the output voltage begins to differ from the linear trend.
+
+	\subsection{Discussion}
+	The measured incremental gain of $0.985$ indicates that the circuit functions 
+	pretty effectively as a voltage follower, since the gain is close to the ideal value 
+	of $1$. The small difference from unity gain is caused by the finite open-loop 
+	gain of the differential amplifier. Because the open loop gain is not infinite, 
+	the closed loop gain of the follower cannot be exactly one.
+	The clipping observed near the voltage rails reflects the compliance limits of 
+	the amplifier. When the input voltage is near ground or $V_{dd}$, the 
+	transistors leave the saturation region required for proper operation. 
+	As a result, the amplifier can no longer track the input voltage accurate;y, 
+	causing to the observed difference from linear behavior near the extremes of 
+	the sweep.
 
 \end{document}

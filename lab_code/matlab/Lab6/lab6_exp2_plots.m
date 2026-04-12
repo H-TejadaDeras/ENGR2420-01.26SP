@@ -8,7 +8,7 @@ plot(x, y, '.'); hold on;
 
 % Your given line
 y_line = 215.016 * x + 3.257;
-plot(x, y_line, '--', 'LineWidth', 2);
+plot(x, y_line, 'LineWidth', 2);
 
 xlabel('V_{dm} (V)');
 ylabel('V_{out} (V)');
@@ -32,7 +32,7 @@ p_iv = polyfit(x(idx), y(idx), 1);
 
 figure;
 plot(x, y, '.'); hold on;
-plot(x, polyval(p_iv, x), '--', 'LineWidth', 2);
+plot(x, polyval(p_iv, x), 'LineWidth', 2);
 xlabel('V_{out} (V)');
 ylabel('I_{out} (A)');
 title('Output I-V Characteristic');
@@ -60,7 +60,7 @@ p_gm = polyfit(x(idx), y(idx), 1);
 
 figure;
 plot(x, y, '.'); hold on;
-plot(x, polyval(p_gm, x), '--', 'LineWidth', 2);
+plot(x, polyval(p_gm, x), 'LineWidth', 2);
 xlabel('V_{dm} (V)');
 ylabel('I_1 - I_2 (A)');
 title('Incremental Transconductance');

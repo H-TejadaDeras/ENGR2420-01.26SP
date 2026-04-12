@@ -99,32 +99,73 @@
 	The plots show that the differential amplifier cannot pull its output voltage completely down to ground once it enters the active region. 
 	This limitation is caused by the tail current bias transistor ($M_b$) requiring a minimum voltage drop to remain saturated, thus imposing a lower limit on $V_{out}$ of approximately $\kappa(V_1 - V_b)$.
 \section{Transconductance, Output Resistance, and Gain}
-    \subsection{Results}
+\subsection{Results}
 
-    \begin{figure}[H]
+\begin{figure}[H]
         \centering
         \includegraphics[width=0.6\linewidth]{../diagrams/lab6_diagram_exp2_1.pdf}
-    \caption{Schematic setup for measuring the incremental differential-mode voltage gain.}\label{fig:exp2_1}
-    \end{figure}
+    \caption{Schematic setup for measuring the incremental differential-mode voltage gain.}\label{fig:exp2_d}
+\end{figure}
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_diagram_exp2_2.pdf}
-    \caption{Schematic setup for measuring the output current to determine incremental output resistance.}\label{fig:exp2_2}
-    \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../diagrams/lab6_diagram_exp2_2.pdf}
+\caption{Schematic setup for measuring the output current to determine incremental output resistance.}\label{fig:exp2_2}
+\end{figure}
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.6\linewidth]{../diagrams/lab6_diagram_exp2_3.pdf}
-    \caption{Schematic setup for measuring the short-circuit output current to determine the incremental transconductance gain.}\label{fig:exp2_3}
-    \end{figure}
-    
-    \subsection{Analysis}
-    \subsection{Discussion}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../diagrams/lab6_diagram_exp2_3.pdf}
+\caption{Schematic setup for measuring the short-circuit output current to find the incremental transconductance gain.}\label{fig:exp2_3}
+\end{figure}
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../diagrams/lab6_exp2_gain.pdf}
+    \caption{Plot of $V_{out}$ versus $V_{dm}$ showing the high-gain region of the differential amplifier. A linear fit to the steepest section gives a measured differential-mode voltage gain ($A_{dm}$) of 215.02.}
+    \label{fig:exp2_gain}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../diagrams/lab6_exp2_IV.pdf}
+    \caption{Output current-voltage characteristic of the differential amplifier with the differential input voltage set to zero. The linear fit to the shallow region gives an incremental output resistance ($r_o$) of $3.29 \text{ M}\Omega$.}
+    \label{fig:exp2_IV}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../diagrams/lab6_exp2_gm.pdf}
+    \caption{Incremental transconductance measurement showing the short-circuit output current versus differential input voltage. The linear fit gives a transconductance ($g_m$) of $61.43~\mu\mho$.}
+    \label{fig:exp2_gm}
+\end{figure}
+
+\subsection{Analysis}
+In this experiment, the differential-mode voltage gain ($A_{dm}$) was determined using two different methods. 
+First, by sweeping $V_1$ around $V_2$ and fitting a line to the steepest section of the voltage 
+transfer characteristic, a gain of 215.02 was determined. 
+Next, the parameters of the amplifier's gain equation—incremental output resistance 
+($r_o$) and transconductance ($g_m$) were measured independently. 
+Setting $V_{dm} = 0 \text{ V}$ and sweeping $V_{out}$ gave an I-V curve 
+where the inverse of the shallow slope gave an output resistance $r_o = 3.29 \text{ M}\Omega$. 
+Finally, holding the output voltage as a constant and sweeping the differential 
+input voltage gave a curve where the slope near $V_{dm} = 0 \text{ V}$ gave a transconductance
+ $g_m = 61.43~\mu\mho$.
+
+\subsection{Discussion}
+The theoretical incremental differential-mode voltage gain can be found
+using the relationship $A_{dm} = R_{out} \cdot G_m$. 
+Multiplying the output resistance ($3.29 \text{ M}\Omega$) 
+by the transconductance ($61.43~\mu\mho$) gives a calculated gain of approximately 202.1. 
+This computed value is close to the 215.02 gain measured from the slope of the voltage transfer 
+characteristic. The slight error of about 6\% is expected 
+and could be caused by minor variations in the 
+exact operating points.
 
 \section{Unity-Gain Follower}
-    \subsection{Results}
-
+\subsection{Results}
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.6\linewidth]{../diagrams/lab6_exp3_diagram.pdf}

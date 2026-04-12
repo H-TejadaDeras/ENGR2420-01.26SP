@@ -37,9 +37,9 @@ xlabel('V_{out} (V)');
 ylabel('I_{out} (A)');
 title('Output I-V Characteristic');
 
-ro = 1 / p_iv(1)
+ro = 1 / p_iv(1);
 
-legend('Data', sprintf('Fit (r_o = %.2f M\\Omega)', ro/1e6), 'Location','best');
+legend('Data', sprintf('Fit (r_o = %.2f \\Omega)', ro), 'Location','best');
 
 %%
 trans = load("lab6_exp2_incremental_transconductance.mat");
@@ -67,6 +67,6 @@ title('Incremental Transconductance');
 
 gm = p_gm(1)
 
-legend('Data', sprintf('Fit (g_m = %.2f \\mu℧)', gm*1e6), 'Location','best');
+legend('Data', 'Fit (g_m = 6.1431e-05 ℧)', gm), 'Location','best');
 %%
-av_calc = gm * ro
+av_computer = gm * ro

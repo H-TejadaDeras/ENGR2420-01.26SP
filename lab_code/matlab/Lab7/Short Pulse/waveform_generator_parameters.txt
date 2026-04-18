@@ -1,0 +1,4 @@
+Frequency: 1 kHz
+Amplitude: 50 mVpp
+Offset: 1.5 VDC
+Waveform: Square

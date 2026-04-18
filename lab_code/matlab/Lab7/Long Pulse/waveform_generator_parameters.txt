@@ -1,0 +1,4 @@
+Frequency: 100 Hz
+Amplitude: 3 Vpp
+Offset: 1.5 VDC
+Waveform: Square

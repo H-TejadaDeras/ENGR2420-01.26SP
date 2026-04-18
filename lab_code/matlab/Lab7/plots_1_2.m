@@ -71,11 +71,15 @@ legend('Data','Best-fit line','Location','best');
 ylim([-0.5*10^-6, 3*10^-6])
 
 %% 
-data = readmatrix('exp3_1_highres.csv');
+data = readmatrix('Long Pulse\NewFile1.csv');
 
 CH1 = data(:,2);
 CH2 = data(:,3);
 
+
+window = 5;
+CH1_smooth = movmean(CH1, window);
+CH2_smooth = movmean(CH2, window);
 t0 = -6.00e-4;
 dt = 1.00e-6;
 
@@ -84,8 +88,8 @@ t = t0 + (0:length(CH1)-1)' * dt;
 figure;
 
 
-plot(t, CH1, 'b'); hold on;
-plot(t, CH2, 'r');
+plot(t, CH1_smooth, 'b.'); hold on;
+plot(t, CH2_smooth, 'r.');
 
 
 xlabel('Time (μs)');
@@ -95,18 +99,34 @@ title('Unity-Gain Follower Response');
 legend({'Input', 'Output'}, 'Location', 'best');
 
 set(gca, 'FontSize', 12, 'LineWidth', 1);
-ylim([0.9 1.2])
 
-window = 75; 
+%%
+data = readmatrix('Short Pulse\NewFile1.csv');
 
+CH1 = data(:,2);
+CH2 = data(:,3);
+
+window = 40;
 CH1_smooth = movmean(CH1, window);
 CH2_smooth = movmean(CH2, window);
 
+t0 = -6.00e-4;
+dt = 1.00e-6;
+
+t = t0 + (0:length(CH1)-1)' * dt;
+
 figure;
-plot(t, CH1_smooth, 'b.'); hold on;
-plot(t, CH2_smooth, 'r.');
+
+plot(t, CH2_smooth+0.005, 'r.');
+hold on;
+plot(t, CH1_smooth, 'b.');
+
+
 
 xlabel('Time (μs)');
 ylabel('Voltage (V)');
-title('Smoothed Unity-Gain Follower Response');
-legend({'Input (smoothed)', 'Output (smoothed)'}, 'Location', 'best');
+title('Unity-Gain Follower Response');
+
+legend({'Input', 'Output'}, 'Location', 'best');
+
+set(gca, 'FontSize', 12, 'LineWidth', 1);

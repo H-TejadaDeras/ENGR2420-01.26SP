@@ -92,63 +92,63 @@ Rb100k = gradient(Vb100k)./gradient(Ib100k);
 
 %% rb vs Ib (1k)
 figure
-loglog(Ib1k, Rb1k, '.', 'DisplayName','Measured Data')
+loglog(Ib1k, Rb1k, '.', 'DisplayName','Measured Data (R: 1 k\Omega)')
 hold on
 
-idx = (Ib1k >= 10^-8.95) & (Ib1k <= 10^-7.1) & (Rb1k > 0);
-fRb1 = fit(log(Ib1k(idx))', log(Rb1k(idx))', 'poly1');
+% idx = (Ib1k >= 10^-8.95) & (Ib1k <= 10^-7.1) & (Rb1k > 0);
+% fRb1 = fit(log(Ib1k(idx))', log(Rb1k(idx))', 'poly1');
 
-A = exp(fRb1.p2);
-m = fRb1.p1;
+% A = exp(fRb1.p2);
+% m = fRb1.p1;
 
-Rb_fit1 = A*Ib1k.^m;
-loglog(Ib1k, Rb_fit1,'DisplayName','Linear Fit (log-log)')
+% Rb_fit1 = A*Ib1k.^m;
+% loglog(Ib1k, Rb_fit1,'DisplayName','Linear Fit (log-log)')
 
-text(0.05,0.1,sprintf('Linear fit slope m = %.2f',m),'Units','normalized')
+% text(0.05,0.1,sprintf('Linear fit slope m = %.2f',m),'Units','normalized')
 
-title('Incremental Base Resistance vs Base Current (1kΩ)')
+title('Incremental Base Resistance vs Base Current')
 xlabel('Base Current (A)')
 ylabel('R_b (\Omega)')
 legend('Location','best')
 
 %% rb vs Ib (10k)
-figure
-loglog(Ib10k, Rb10k, '.', 'DisplayName','Measured Data')
-hold on
+% figure
+loglog(Ib10k, Rb10k, '.', 'DisplayName','Measured Data (R: 10 k\Omega)')
+% hold on
 
-idx = (Ib10k >= 10^-9.6) & (Ib10k <= 10^-7.7) & (Rb10k > 0);
-fRb2 = fit(log(Ib10k(idx))', log(Rb10k(idx))', 'poly1');
+% idx = (Ib10k >= 10^-9.6) & (Ib10k <= 10^-7.7) & (Rb10k > 0);
+% fRb2 = fit(log(Ib10k(idx))', log(Rb10k(idx))', 'poly1');
 
-A = exp(fRb2.p2);
-m = fRb2.p1;
+% A = exp(fRb2.p2);
+% m = fRb2.p1;
 
-Rb_fit2 = A*Ib10k.^m;
-loglog(Ib10k, Rb_fit2,'DisplayName','Linear Fit (log-log)')
+% Rb_fit2 = A*Ib10k.^m;
+% loglog(Ib10k, Rb_fit2,'DisplayName','Linear Fit (log-log)')
 
-text(0.05,0.1,sprintf('Linear fit slope m = %.2f',m),'Units','normalized')
+% text(0.05,0.1,sprintf('Linear fit slope m = %.2f',m),'Units','normalized')
 
-title('Incremental Base Resistance vs Base Current (10kΩ)')
+% title('Incremental Base Resistance vs Base Current (10kΩ)')
 xlabel('Base Current (A)')
 ylabel('R_b (\Omega)')
 legend('Location','best')
 
 %% rb vs Ib (100k)
-figure
-loglog(Ib100k, Rb100k, '.', 'DisplayName','Measured Data')
-hold on
+% figure
+loglog(Ib100k, Rb100k, '.', 'DisplayName','Measured Data (R: 100 k\Omega)')
+% hold on
 
-idx = (Ib100k >= 10^-9.8) &(Ib100k <= 10^-8.1) & (Rb100k > 0);
-fRb3 = fit(log(Ib100k(idx))', log(Rb100k(idx))', 'poly1');
+% idx = (Ib100k >= 10^-9.8) &(Ib100k <= 10^-8.1) & (Rb100k > 0);
+% fRb3 = fit(log(Ib100k(idx))', log(Rb100k(idx))', 'poly1');
 
-A = exp(fRb3.p2);
-m = fRb3.p1;
+% A = exp(fRb3.p2);
+% m = fRb3.p1;
 
-Rb_fit3 = A*Ib100k.^m;
-loglog(Ib100k, Rb_fit3,'DisplayName','Linear Fit (log-log)')
+% Rb_fit3 = A*Ib100k.^m;
+% loglog(Ib100k, Rb_fit3,'DisplayName','Linear Fit (log-log)')
 
-text(0.05,0.1,sprintf('Linear fit slope m = %.2f',m),'Units','normalized')
+% text(0.05,0.1,sprintf('Linear fit slope m = %.2f',m),'Units','normalized')
 
-title('Incremental Base Resistance vs Base Current (100kΩ)')
+% title('Incremental Base Resistance vs Base Current (100kΩ)')
 xlabel('Base Current (A)')
 ylabel('R_b (\Omega)')
 legend('Location','best')
@@ -158,65 +158,14 @@ Gm1k   = gradient(Ic1k)./gradient(Vb1k);
 Gm10k  = gradient(Ic10k)./gradient(Vb10k);
 Gm100k = gradient(Ic100k)./gradient(Vb100k);
 
-%% gm vs Ic (1k)
+%% gm vs Ic
 figure
-loglog(Ic1k, Gm1k, '.', 'DisplayName','Measured Data')
+loglog(Ic1k, Gm1k, '.', 'DisplayName','Measured Data (R: 1 k\Omega)')
 hold on
+loglog(Ic10k, Gm10k, '.', 'DisplayName','Measured Data (R: 10 k\Omega)')
+loglog(Ic100k, Gm100k, '.', 'DisplayName','Measured Data (R: 100 k\Omega)')
 
-idx = (Ic1k >= 10^-9.2) & (Ic1k <= 10^-5.4) & (Gm1k > 0);
-fGm1 = fit(log(Ic1k(idx))', log(Gm1k(idx))', 'poly1');
-
-A = exp(fGm1.p2);
-m = fGm1.p1;
-
-Gm_fit1 = A*Ic1k.^m;
-loglog(Ic1k, Gm_fit1,'DisplayName','Linear Fit (log-log)')
-
-text(0.05,0.90,sprintf('Linear fit slope m = %.2f ℧',m),'Units','normalized')
-
-title('Incremental Transconductance vs Collector Current (1kΩ)')
-xlabel('Collector Current (A)')
-ylabel('G_m (℧)')
-legend('Location','best')
-
-%% gm vs Ic (10k)
-figure
-loglog(Ic10k, Gm10k, '.', 'DisplayName','Measured Data')
-hold on
-
-idx = (Ic10k >= 1e-9) & (Ic10k <= 10^-5.4) & (Gm10k > 0);
-fGm2 = fit(log(Ic10k(idx))', log(Gm10k(idx))', 'poly1');
-
-A = exp(fGm2.p2);
-m = fGm2.p1;
-
-Gm_fit2 = A*Ic10k.^m;
-loglog(Ic10k, Gm_fit2,'DisplayName','Linear Fit (log-log)')
-
-text(0.05,0.90,sprintf('Linear fit slope m = %.2f ℧',m),'Units','normalized')
-
-title('Incremental Transconductance vs Collector Current (10kΩ)')
-xlabel('Collector Current (A)')
-ylabel('G_m (℧)')
-legend('Location','best')
-
-%% gm vs Ic (100k)
-figure
-loglog(Ic100k, Gm100k, '.', 'DisplayName','Measured Data')
-hold on
-
-idx = (Ic100k >= 10^-9.5) & (Ic100k <= 10^-6.5) & (Gm100k > 0);
-fGm3 = fit(log(Ic100k(idx))', log(Gm100k(idx))', 'poly1');
-
-A = exp(fGm3.p2);
-m = fGm3.p1;
-
-Gm_fit3 = A*Ic100k.^m;
-loglog(Ic100k, Gm_fit3,'DisplayName','Linear Fit (log-log)')
-
-text(0.05,0.90,sprintf('Linear fit slope m = %.2f ℧',m),'Units','normalized')
-
-title('Incremental Transconductance vs Collector Current (100kΩ)')
+title('Incremental Transconductance vs Collector Current')
 xlabel('Collector Current (A)')
 ylabel('G_m (℧)')
 legend('Location','best')

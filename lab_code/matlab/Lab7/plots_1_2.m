@@ -37,20 +37,24 @@ load('lab7_exp2_2.mat')
 figure; 
 hold on;
 
-V = V_out_45dV(1:length(I_out));
+V = V_out_45dV;
+I = I_out_45dV;
 
-plot(V, I_out, '.');
+plot(V, I, '.');
 
-idx = (V >= 0.6) & (V <= .80);
+idx = (V >= 0.68) & (V <= 0.7);
 
-p = polyfit(V(idx), I_out(idx), 1);
+p = polyfit(V(idx), I(idx), 1);
 fit_line = polyval(p, V);
-plot(V, fit_line, '-', 'LineWidth', 2);
+
+%plot(V, fit_line, '-', 'LineWidth', 2);
+
 xlabel('V_{out}');
 ylabel('I_{out}');
 title('Output I-V Characteristic');
 legend('Data','Best-fit line','Location','best');
-ylim([-0.5*10^-6, 3*10^-6])
+ylim([-0.002 0.006])
+
 %%
 load('lab7_exp2_3.mat')
 

@@ -90,13 +90,8 @@ legend('Data','Linear Fit','Location','best');
 
 ylim([-0.5e-6, 3e-6])
 
-I_max = max(I_out);
-I_min = min(I_out);
 
-text(-0.2, 1.5*10^-6, sprintf('g_m = %.2e ℧', gm), 'FontSize', 12);
-text(0.2, I_max+1e-7, sprintf('I_{max} = %.2e A', I_max));
-text(-0.4, I_min-1e-7, sprintf('I_{min} = %.2e A', I_min));
-
+text(0.05, 1.5*10^-6, sprintf('g_m = %.2e ℧', gm), 'FontSize', 12);
 
 %% gain compare
 Av_calc = gm * r_out;

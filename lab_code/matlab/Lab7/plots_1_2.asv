@@ -33,7 +33,7 @@ plot(Vdm, fit_line, 'LineWidth', 2);
 
 xlabel('V_{dm} (V)');
 ylabel('V_{out} (V)');
-title('Differential-Mode Voltage Gain');
+title('V_{out} vs V_{dm}');
 legend('Data','Linear Fit','Location','best');
 
 ylim([-0.5 5.5])
@@ -51,6 +51,7 @@ I = I_out_45dV;
 
 plot(V, I, '.');
 
+% Adjust this region if needed
 idx = (V >= 1.5) & (V <= 2.5);
 
 p = polyfit(V(idx), I(idx), 1);
@@ -75,7 +76,7 @@ figure; hold on;
 
 plot(Vdm_45dV, I_out, '.');
 
-idx = (Vdm_45dV >= -0.06) & (Vdm_45dV <= 0.0);
+idx = (Vdm_45dV >= -0.06) & (Vdm_45dV <= 0.06);
 
 p = polyfit(Vdm_45dV(idx), I_out(idx), 1);
 gm = p(1);
@@ -85,7 +86,7 @@ plot(Vdm_45dV, fit_line, 'LineWidth', 2);
 
 xlabel('V_{dm} (V)');
 ylabel('I_{out} (A)');
-title('Incremental Transconductance');
+title('I_{out} vs V_{dm}');
 legend('Data','Linear Fit','Location','best');
 
 ylim([-0.5e-6, 3e-6])
@@ -104,7 +105,7 @@ fprintf('Gain from VTC: %.2f V/V\n', gain);
 fprintf('Gain from gm*rout: %.2f V/V\n', Av_calc);
 
 
-%% exp3 a 
+%% exp3 a - Small Signal (Dynamic Edge Detection)
 data = readmatrix('Long Pulse\NewFile1.csv');
 
 CH1 = data(:,2);
@@ -157,7 +158,7 @@ text(mean(t_fit_rise), mean(Vfit_rise), ...
     sprintf('\\tau_{rise} = %.2e s', tau_rise), ...
     'FontSize', 11, 'Color', 'k');
 
-idx_fall = (t > t_fall_edge + 19e-6) & (t < t_fall_edge + 85e-6);
+idx_fall = (t > t_fall_edge + 15e-6) & (t < t_fall_edge + 85e-6);
 
 t_fall = t(idx_fall);
 v_fall = CH2_aligned(idx_fall);
@@ -215,8 +216,6 @@ xlabel('Time (s)');
 ylabel('Voltage (V)');
 title('Unity-Gain Follower (Large Signal)');
 
-idx_rise = (t > t_rise_edge + 1e-6) & (t < t_rise_edge + 30e-6);
-
 p_rise = polyfit(t(idx_rise), CH2_aligned(idx_rise), 1);
 slew_rise = p_rise(1);
 
@@ -225,7 +224,7 @@ v_fit_rise = polyval(p_rise, t_fit_rise);
 
 plot(t_fit_rise, v_fit_rise, 'k-', 'LineWidth', 2);
 
-text(0.62*10^-3, 1.5, ...
+text(mean(t_fit_rise), mean(v_fit_rise), ...
     sprintf('SR_{rise} = %.2e V/s', slew_rise), ...
     'FontSize', 11, 'Color', 'k');
 
@@ -239,8 +238,9 @@ v_fit_fall = polyval(p_fall, t_fit_fall);
 
 plot(t_fit_fall, v_fit_fall, 'g-', 'LineWidth', 2);
 
-text(0.38*10^-3, 1.5, ...
+text(mean(t_fit_fall), mean(v_fit_fall), ...
     sprintf('SR_{fall} = %.2e V/s', slew_fall), ...
     'FontSize', 11, 'Color', 'g');
-ylim([1.47 1.54])
+
+ylim([1.47 0.158])
 legend('Input (V)', 'Output (V)', 'Rise Fit', 'Fall Fit', 'Location','bestoutside');

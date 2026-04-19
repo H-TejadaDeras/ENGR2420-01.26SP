@@ -75,7 +75,23 @@
     \end{figure}
 
     \subsection{Analysis}
+	The Voltage Transfer Characteristics (VTC) in Figure 
+	2 show the relationship between the input voltage ($V_{in}$)
+	and the output voltage ($V_{out}$) for three distinct inverting 
+	input bias voltages: $V_{bias} = $ 2.5 V, 3.5 V, and 4.5 V. 
+	The plots show that the output remains near the lower rail until $V_{in}$ 
+	approaches $V_{bias}$. As $V_{in}$ 
+	crosses the $V_{bias}$ threshold, $V_{out}$ shows a sharp, 
+	transition up to the upper rail, meaning an extremely high voltage gain. 
     \subsection{Discussion}
+	Compared to the simple differential amplifier analyzed in Lab 6,
+	this current-mirror differential amplifier shows a significantly larger, 
+	rail to rail output swing. 
+	Furthermore, the transition region is much steeper. 
+	This is a direct result of using an active current-mirror. 
+	The current mirrors push and pull current into a high impedance output node, 
+	which allows the output voltage to swing much closer to the power 
+	supply rails while also boosting the differential mode voltage gain
 
 \section{Transconductance, Output Resistance, and Gain}
     \subsection{Results}
@@ -111,7 +127,23 @@
 
 
     \subsection{Analysis}
+	From the linear fit of the VTC's high-gain region shown in Figure 5, 
+	the directly measured differential-mode voltage gain is $A_v = 181.70$ V/V. 
+	The incremental output resistance was extracted from the inverse slope of the 
+	$I_{out}$ versus $V_{out}$ characteristic curve (Figure 6) with 
+	$V_{dm} = 0$ V, give $r_{out} = 1.44 \times 10^7\ \Omega$. 
+	Finally, the incremental transconductance was determined 
+	from the slope of the $I_{out}$ versus $V_{dm}$ curve in Figure 7, 
+	resulting in $g_m = 1.20 \times 10^{-5}\ \Omega^{-1}$
     \subsection{Discussion}
+	The theoretical differential-mode voltage gain can be calculated 
+	using the independently measured incremental transconductance and output resistance:
+	\[A_{v,calc} = g_m \times r_{out}\]
+	Substituting the extracted values gives:
+	\[A_{v,calc} = (1.20 \times 10^{-5}\ \Omega^{-1}) \times (1.44 \times 10^7\ \Omega) = 172.8 \text{ V/V}\]
+	Comparing this calculated gain to the directly measured gain of $181.70$ V/V, 
+	we find a percent error of approximately 5.15\%. The results show that the 
+	current-mirror provides a significantly higher gain than the simple differential amplifier from Lab 6 by maximizing the output resistance.
 \section{Unity-Gain Follower Step Response}
     \subsection{Results}
 

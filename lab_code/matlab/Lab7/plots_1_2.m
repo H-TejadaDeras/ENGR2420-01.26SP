@@ -5,9 +5,9 @@ load('lab7_exp1.mat')
 
 figure; hold on;
 
-plot(V_in_25dV, V_out_25dV, '.');
-plot(V_in_35dV, V_out_35dV, '.');
-plot(V_in_45dV, V_out_45dV, '.');
+plot(V_in_25dV, -V_out_25dV, '.');
+plot(V_in_35dV, -V_out_35dV, '.');
+plot(V_in_45dV, -V_out_45dV, '.');
 
 xlabel('V_{in} (V)');
 ylabel('V_{out} (V)');

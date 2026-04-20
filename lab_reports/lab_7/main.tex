@@ -75,14 +75,14 @@
     \end{figure}
 
     \subsection{Analysis}
-	The Voltage Transfer Characteristics (VTC) in Figure 
-	2 show the relationship between the input voltage ($V_{in}$)
-	and the output voltage ($V_{out}$) for three distinct inverting 
-	input bias voltages: $V_{bias} = $ 2.5 V, 3.5 V, and 4.5 V. 
-	The plots show that the output remains near the lower rail until $V_{in}$ 
-	approaches $V_{bias}$. As $V_{in}$ 
-	crosses the $V_{bias}$ threshold, $V_{out}$ shows a sharp, 
-	transition up to the upper rail, meaning an extremely high voltage gain. 
+    The Voltage Transfer Characteristics (VTC) in Figure 
+    2 show the relationship between the input voltage ($V_{in}$)
+    and the output voltage ($V_{out}$) for three distinct inverting 
+    input bias voltages: $V_{bias} = $ 2.5 V, 3.5 V, and 4.5 V. 
+    The plots show that the output remains near the lower rail until $V_{in}$ 
+    approaches $V_{bias}$. As $V_{in}$ 
+    crosses the $V_{bias}$ threshold, $V_{out}$ shows a sharp, 
+    transition up to the upper rail, meaning an extremely high voltage gain.
     \subsection{Discussion}
 	Compared to the simple differential amplifier analyzed in Lab 6,
 	this current-mirror differential amplifier shows a significantly larger, 
@@ -127,14 +127,16 @@
 
 
     \subsection{Analysis}
-	From the linear fit of the VTC's high-gain region shown in Figure 5, 
-	the directly measured differential-mode voltage gain is $A_v = 181.70$ V/V. 
-	The incremental output resistance was extracted from the inverse slope of the 
-	$I_{out}$ versus $V_{out}$ characteristic curve (Figure 6) with 
-	$V_{dm} = 0$ V, give $r_{out} = 1.44 \times 10^7\ \Omega$. 
-	Finally, the incremental transconductance was determined 
-	from the slope of the $I_{out}$ versus $V_{dm}$ curve in Figure 7, 
-	resulting in $g_m = 1.20 \times 10^{-5}\ \Omega^{-1}$
+        From the linear fit of the VTC's high-gain region shown in Figure 5, 
+        the directly measured differential-mode voltage gain is $A_v = 181.70$ V/V. 
+        The incremental output resistance was extracted from the inverse slope of the 
+        $I_{out}$ versus $V_{out}$ characteristic curve (Figure 6) with 
+        $V_{dm} = 0$ V, give $r_{out} = 1.44 \times 10^7\ \Omega$. 
+        Finally, the incremental transconductance was determined 
+        from the slope of the $I_{out}$ versus $V_{dm}$ curve in Figure 7, 
+        resulting in $g_m = 1.20 \times 10^{-5}\ \Omega^{-1}$. Additionally, the 
+        measured limiting values of $I_{out}$ were $46.3\ \mu\text{A}$ in the positive 
+        direction and $-54.5\ \mu\text{A}$ in the negative direction.
     \subsection{Discussion}
 	The theoretical differential-mode voltage gain can be calculated 
 	using the independently measured incremental transconductance and output resistance:
@@ -150,14 +152,13 @@
         \includegraphics[width=0.6\linewidth]{../diagrams/lab7_exp3_diagram.pdf}
         \caption{Schematic of the current-mirror differential amplifier used as a unity-gain follower (buffer) driving a 1 nF load capacitor.}\label{fig:exp3_setup}
     \end{figure}
-	In this experiment, we configured the circuit as shown above and inputted a 1 kHz square wave with a 1.5 VDC offset from GND and a 50 mVpp amplitude. This was our signal to simulate a small burst step response. For our larger step response, we inputted a 100 Hz square wave with a 1.5 VDC offset from GND and a 3 Vpp amplitude. The waveform was created using a waveform generator and the data was measured using an oscilloscope, both of which came from the Electronics Prototyping Room. Both waveforms have an offset of 1.5 VDC to make sure that the differential pair is always saturated. The frequencies selected allowed for a clear output signal and time for the circuit to reach the steady state (if not it looked like a triangle wave). We expect the output voltage to closely resemble the input voltage from this circuit as it is configured as a unity gain follower.
+	In this experiment, we configured the circuit as shown above and inputted a 1 kHz square wave with a 1.5 VDC offset from GND and a 50 mV amplitude. This was our signal to simulate a small burst step response. For our larger step response, we inputted a 100 Hz square wave with a 1.5 VDC offset from GND and a 3V amplitude. The waveform was created using a waveform generator and the data was measured using an oscilloscope, both of which came from the Electronics Prototyping Room. Both waveforms have an offset of 1.5 VDC to make sure that the differential pair is always saturated. The frequencies selected allowed for a clear output signal and time for the circuit to reach the steady state (if not it looked like a triangle wave). We expect the output voltage to closely resemble the input voltage from this circuit as it is configured as a unity gain follower.
     \subsection{Results}
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{../diagrams/lab7_exp3_1.pdf}
         \caption{Small signal step response of the current-mirror differential amplifier as a unity-gain follower driving a 1 nF load capacitor. Extracted rise and fall time constants are shown.}\label{fig:exp3_small_signal}
     \end{figure}
-	The response (output change) of the circuit is relatively symmetrical. Both the rising and falling edges have the same shape and roughly the same time constant. As shown in the graph, both sides look very similar (just inverted from each other).
     
     \begin{figure}[H]
         \centering
@@ -166,7 +167,33 @@
     \end{figure}
 
     \subsection{Analysis}
+
+    For the small-signal step response shown in Figure~\ref{fig:exp3_small_signal}, 
+    the measured time constants are $\tau_{rise} = 2.55 \times 10^{-5}$ s and $\tau_{fall} = 2.68 \times 10^{-5}$ s. 
+    For a unity-gain follower, the expected time constant is $\tau = C_L / g_m$.
+    Using $C_L = 1 \text{ nF}$ and $g_m = 1.20 \times 10^{-5} \ \Omega^{-1}$ from Experiment 2, the theoretical value is:
+    \[
+    \tau_{calc} = \frac{1 \times 10^{-9}}{1.20 \times 10^{-5}} \approx 8.33 \times 10^{-5} \text{ s}
+    \]
+    For the large-signal response shown in Figure~\ref{fig:exp3_large_signal}, the measured slew rates are $SR_{rise} = 4.63 \times 10^{4}$ V/s and $SR_{fall} = -5.45 \times 10^{4}$ V/s. 
+    To compare these with theoretical values, we use the formula $SR = I_{limit} / C_L$. 
+    Using the limiting currents measured in Experiment 2 ($I_{out+} = 46.3\ \mu\text{A}$ and $I_{out-} = -54.5\ \mu\text{A}$) and $C_L = 1$ nF, the theoretical slew rates are $SR_{calc,+} = 4.63 \times 10^{4}$ V/s and $SR_{calc,-} = -5.45 \times 10^{4}$ V/s.
+    The measured small-signal time constants are different from the theoretical value by about 69\%.
     \subsection{Discussion}
-%----------------------------------------------------------
+
+    In the small-signal case, the amplifier behaves as a linear system with an exponential step response. 
+    The rise and fall time constants are similar, indicating approximately symmetric behavior.
+    The measured time constants ($\sim$26 $\mu$s) are smaller 
+    than the theoretical value (83.3 $\mu$s). 
+    This difference likely comes from dynamic operating conditions, 
+    where the effective transconductance is different from from the DC value used in calculations.
+    In the large-signal case, the output transitions 
+    become linear in time, indicating slew-rate limitation. This happens when the input step brings
+    the differential pair into current steering saturation, 
+    limiting the current available to charge and discharge the load capacitor.
+    The rise and fall slew rates are very similar in magnitude 
+    but not identical, showing slight asymmetry in the sourcing and sinking paths. 
+    Overall, the results agree with expected behavior.
+    %----------------------------------------------------------
 
 \end{document}

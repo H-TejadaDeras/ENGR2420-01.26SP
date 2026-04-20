@@ -145,21 +145,19 @@
 	we find a percent error of approximately 5.15\%. The results show that the 
 	current-mirror provides a significantly higher gain than the simple differential amplifier from Lab 6 by maximizing the output resistance.
 \section{Unity-Gain Follower Step Response}
-    \subsection{Results}
-
-	
-\begin{figure}[H]
+   \begin{figure}[H]
         \centering
         \includegraphics[width=0.6\linewidth]{../diagrams/lab7_exp3_diagram.pdf}
         \caption{Schematic of the current-mirror differential amplifier used as a unity-gain follower (buffer) driving a 1 nF load capacitor.}\label{fig:exp3_setup}
     \end{figure}
-
+	In this experiment, we configured the circuit as shown above and inputted a 1 kHz square wave with a 1.5 VDC offset from GND and a 50 mVpp amplitude. This was our signal to simulate a small burst step response. For our larger step response, we inputted a 100 Hz square wave with a 1.5 VDC offset from GND and a 3 Vpp amplitude. The waveform was created using a waveform generator and the data was measured using an oscilloscope, both of which came from the Electronics Prototyping Room. Both waveforms have an offset of 1.5 VDC to make sure that the differential pair is always saturated. The frequencies selected allowed for a clear output signal and time for the circuit to reach the steady state (if not it looked like a triangle wave). We expect the output voltage to closely resemble the input voltage from this circuit as it is configured as a unity gain follower.
+    \subsection{Results}
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{../diagrams/lab7_exp3_1.pdf}
         \caption{Small signal step response of the current-mirror differential amplifier as a unity-gain follower driving a 1 nF load capacitor. Extracted rise and fall time constants are shown.}\label{fig:exp3_small_signal}
     \end{figure}
-
+	The response (output change) of the circuit is relatively symmetrical. Both the rising and falling edges have the same shape and roughly the same time constant. As shown in the graph, both sides look very similar (just inverted from each other).
     
     \begin{figure}[H]
         \centering

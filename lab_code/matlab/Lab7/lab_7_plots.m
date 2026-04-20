@@ -12,7 +12,7 @@ plot(V_in_45dV, -V_out_45dV, '.');
 xlabel('V_{in} (V)');
 ylabel('V_{out} (V)');
 title('Voltage Transfer Characteristics (VTC)');
-legend('V_{bias}=2.5 V','V_{bias}=3.5 V','V_{bias}=4.5 V','Location','best');
+legend('V_{ref} = 2.5 V','V_{ref} = 3.5 V','V_{ref} = 4.5 V','Location','best');
 
 
 %% exp 2 a
@@ -65,6 +65,7 @@ ylabel('I_{out} (A)');
 title('Output I-V Characteristic');
 legend('Data','Linear Fit','Location','best');
 
+text(1.6, max(I)*0.9, sprintf('g_{out} = %.2e ℧', slope), 'FontSize', 12)
 text(1.6, max(I)*0.8, sprintf('r_{out} = %.2e \\Omega', r_out), 'FontSize', 12);
 
 
@@ -100,39 +101,39 @@ fprintf('Gain from gm*rout: %.2f V/V\n', Av_calc);
 
 
 %% exp3 a 
-data = readmatrix('Long Pulse\NewFile1.csv');
+% tau not correct
+load("lab7_exp3_data.mat")
+CH1 = small_step_response.CH1;
+CH2 = small_step_response.CH2;
+t = small_step_response.X .* small_step_response_parameters.Increment + small_step_response_parameters.Start;
 
-CH1 = data(:,2);
-CH2 = data(:,3);
+CH1_smooth = movmean(CH1, 30);
+CH2_smooth = movmean(CH2, 30);
 
-CH1_smooth = movmean(CH1, 5);
-CH2_smooth = movmean(CH2, 5);
+figure;
+plot(t, CH1_smooth, 'b.'); hold on;
+plot(t, CH2_smooth, 'r.');
 
-t0 = -6.00e-4;
-dt = 1.00e-6;
-t = t0 + (0:length(CH1)-1)' * dt;
-t = t - t(1);
+xlabel('Time (s)');
+ylabel('Voltage (V)');
+title('Unity-Gain Follower (Small Signal)');
 
-offset_correction = mean(CH2_smooth(1:50)) - mean(CH1_smooth(1:50));
-CH2_aligned = CH2_smooth - offset_correction;
+% fit_eq = @(b, x) 1.53 * (1 - exp(-x / b));
+% vals_range = find(t > 0 & t < 0.5e-3);
+% plot_range = t(vals_range);
+% fit_vals = fit(plot_range, small_step_response.CH2(vals_range), fit_eq, StartPoint=small_step_response.CH2(vals_range(1)));
+% % plot(plot_range, 1:size(plot_range, 1))
+% plot(plot_range, 1.53 .* exp(fit_vals(1) .* plot_range), 'y-')
 
 [~, rise_idx_in] = max(diff(CH1_smooth));
 [~, fall_idx_in] = min(diff(CH1_smooth));
 t_rise_edge = t(rise_idx_in);
 t_fall_edge = t(fall_idx_in);
 
-figure;
-plot(t, CH1_smooth, 'b.'); hold on;
-plot(t, CH2_aligned, 'r.');
-
-xlabel('Time (s)');
-ylabel('Voltage (V)');
-title('Unity-Gain Follower (Small Signal)');
-
 idx_rise = (t > t_rise_edge + 30e-6) & (t < t_rise_edge + 100e-6);
 
 t_rise = t(idx_rise);
-v_rise = CH2_aligned(idx_rise);
+v_rise = CH2_smooth(idx_rise);
 Vf_r = v_rise(end);
 Vi_r = v_rise(1);
 
@@ -155,7 +156,7 @@ text(mean(t_fit_rise), mean(Vfit_rise), ...
 idx_fall = (t > t_fall_edge + 19e-6) & (t < t_fall_edge + 85e-6);
 
 t_fall = t(idx_fall);
-v_fall = CH2_aligned(idx_fall);
+v_fall = CH2_smooth(idx_fall);
 Vf_f = v_fall(end);
 Vi_f = v_fall(1);
 
@@ -181,26 +182,16 @@ legend('Input (V)','Output (V)', 'Rise Fit', 'Fall Fit', 'Location','bestoutside
 
 
 %% exp3 b
-data = readmatrix('Short Pulse\NewFile1.csv');
-
-CH1 = data(:,2);
-CH2 = data(:,3);
+load("lab7_exp3_data.mat")
+CH1 = large_step_response.CH1;
+CH2 = large_step_response.CH2;
+t = large_step_response.X .* large_step_response_parameters.Increment + large_step_response_parameters.Start;
 
 CH1_smooth = movmean(CH1, 40);
 CH2_smooth = movmean(CH2, 40);
 
-t0 = -6.00e-4;
-dt = 1.00e-6;
-t = t0 + (0:length(CH1)-1)' * dt;
-t = t - t(1);
-
 offset_correction = mean(CH2_smooth(1:50)) - mean(CH1_smooth(1:50));
 CH2_aligned = CH2_smooth - offset_correction;
-
-[~, rise_idx_in] = max(diff(CH1_smooth));
-[~, fall_idx_in] = min(diff(CH1_smooth));
-t_rise_edge = t(rise_idx_in);
-t_fall_edge = t(fall_idx_in);
 
 figure;
 plot(t, CH1_smooth, 'b.'); hold on;
@@ -210,32 +201,53 @@ xlabel('Time (s)');
 ylabel('Voltage (V)');
 title('Unity-Gain Follower (Large Signal)');
 
-idx_rise = (t > t_rise_edge + 1e-6) & (t < t_rise_edge + 30e-6);
+vals_range = find(t > 0.00054 & t < 0.00068);
+plot_range = -0.0005:0.00001:0.0015;
+tmp = CH2_smooth(vals_range);
+fit_vals = polyfit(t(vals_range), tmp, 1);
+plot(plot_range, fit_vals(1) .* plot_range + fit_vals(2))
 
-p_rise = polyfit(t(idx_rise), CH2_aligned(idx_rise), 1);
-slew_rise = p_rise(1);
+fit_vals(1)
 
-t_fit_rise = linspace(min(t), max(t), 500);
-v_fit_rise = polyval(p_rise, t_fit_rise);
+vals_range = find(t > -0.0049 & t < -0.00426);
+plot_range = -0.0054:0.00001:-0.0035;
+tmp = CH2_smooth(vals_range);
+fit_vals = polyfit(t(vals_range), tmp, 1);
+plot(plot_range, fit_vals(1) .* plot_range + fit_vals(2))
 
-plot(t_fit_rise, v_fit_rise, 'k-', 'LineWidth', 2);
+fit_vals(1)
 
-text(0.62*10^-3, 1.5, ...
-    sprintf('SR_{rise} = %.2e V/s', slew_rise), ...
-    'FontSize', 11, 'Color', 'k');
-
-idx_fall = (t > t_fall_edge + 5e-6) & (t < t_fall_edge + 35e-6);
-
-p_fall = polyfit(t(idx_fall), CH2_aligned(idx_fall), 1);
-slew_fall = p_fall(1);
-
-t_fit_fall = linspace(min(t), max(t), 500);
-v_fit_fall = polyval(p_fall, t_fit_fall);
-
-plot(t_fit_fall, v_fit_fall, 'g-', 'LineWidth', 2);
-
-text(0.38*10^-3, 1.5, ...
-    sprintf('SR_{fall} = %.2e V/s', slew_fall), ...
-    'FontSize', 11, 'Color', 'g');
-ylim([1.47 1.54])
-legend('Input (V)', 'Output (V)', 'Rise Fit', 'Fall Fit', 'Location','bestoutside');
+% [~, rise_idx_in] = max(diff(CH1_smooth));
+% [~, fall_idx_in] = min(diff(CH1_smooth));
+% t_rise_edge = t(rise_idx_in);
+% t_fall_edge = t(fall_idx_in);
+% 
+% idx_rise = (t > t_rise_edge + 1e-6) & (t < t_rise_edge + 30e-6);
+% 
+% p_rise = polyfit(t(idx_rise), CH2_aligned(idx_rise), 1);
+% slew_rise = p_rise(1);
+% 
+% t_fit_rise = linspace(min(t), max(t), 500);
+% v_fit_rise = polyval(p_rise, t_fit_rise);
+% 
+% plot(t_fit_rise, v_fit_rise, 'k-', 'LineWidth', 2);
+% 
+% text(0.62*10^-3, 1.5, ...
+%     sprintf('SR_{rise} = %.2e V/s', slew_rise), ...
+%     'FontSize', 11, 'Color', 'k');
+% 
+% idx_fall = (t > t_fall_edge + 5e-6) & (t < t_fall_edge + 35e-6);
+% 
+% p_fall = polyfit(t(idx_fall), CH2_aligned(idx_fall), 1);
+% slew_fall = p_fall(1);
+% 
+% t_fit_fall = linspace(min(t), max(t), 500);
+% v_fit_fall = polyval(p_fall, t_fit_fall);
+% 
+% plot(t_fit_fall, v_fit_fall, 'g-', 'LineWidth', 2);
+% 
+% text(0.38*10^-3, 1.5, ...
+%     sprintf('SR_{fall} = %.2e V/s', slew_fall), ...
+%     'FontSize', 11, 'Color', 'g');
+% % ylim([1.47 1.54])
+% legend('Input (V)', 'Output (V)', 'Rise Fit', 'Fall Fit', 'Location','bestoutside');

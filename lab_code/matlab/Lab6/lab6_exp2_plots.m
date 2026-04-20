@@ -26,7 +26,7 @@ iv = load("lab6_exp2_output_IV.mat");
 x = iv.V_out_25dV;
 y = iv.I_out_25dV;
 
-idx = (x > 1.4);
+idx = (x > 1.74);
 
 p_iv = polyfit(x(idx), y(idx), 1);
 
@@ -35,6 +35,7 @@ plot(x, y, '.'); hold on;
 plot(x, polyval(p_iv, x), 'LineWidth', 2);
 xlabel('V_{out} (V)');
 ylabel('I_{out} (A)');
+ylim([-1e-6, 1e-6])
 title('Output I-V Characteristic');
 
 ro = 1 / p_iv(1)

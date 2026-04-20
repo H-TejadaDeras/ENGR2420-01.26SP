@@ -122,7 +122,7 @@
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.6\linewidth]{../diagrams/lab7_exp2_itranscon.pdf}
-        \caption{Incremental transconductance measurement showing the output current ($I_{out}$) versus the differential input voltage ($V_{dm}$) with a fixed output voltage. The linear fit gives a transconductance of $g_m = 1.20 \times 10^{-5} \ \Omega^{-1}$.}\label{fig:exp2_transcon}
+        \caption{Incremental transconductance measurement showing the output current ($I_{out}$) versus the differential input voltage ($V_{dm}$) with a fixed output voltage. The linear fit gives a transconductance of $g_m = 1.20 \times 10^{-5} \ \mho$.}\label{fig:exp2_transcon}
     \end{figure}
 
 
@@ -142,7 +142,7 @@
 	using the independently measured incremental transconductance and output resistance:
 	\[A_{v,calc} = g_m \times r_{out}\]
 	Substituting the extracted values gives:
-	\[A_{v,calc} = (1.20 \times 10^{-5}\ \Omega^{-1}) \times (1.44 \times 10^7\ \Omega) = 172.8 \text{ V/V}\]
+	\[A_{v,calc} = (1.20 \times 10^{-5}\ \mho) \times (1.44 \times 10^7\ \Omega) = 172.8 \text{ V/V}\]
 	Comparing this calculated gain to the directly measured gain of $181.70$ V/V, 
 	we find a percent error of approximately 5.15\%. The results show that the 
 	current-mirror provides a significantly higher gain than the simple differential amplifier from Lab 6 by maximizing the output resistance.
@@ -171,7 +171,7 @@
     For the small-signal step response shown in Figure~\ref{fig:exp3_small_signal}, 
     the measured time constants are $\tau_{rise} = 2.55 \times 10^{-5}$ s and $\tau_{fall} = 2.68 \times 10^{-5}$ s. 
     For a unity-gain follower, the expected time constant is $\tau = C_L / g_m$.
-    Using $C_L = 1 \text{ nF}$ and $g_m = 1.20 \times 10^{-5} \ \Omega^{-1}$ from Experiment 2, the theoretical value is:
+    Using $C_L = 1 \text{ nF}$ and $g_m = 1.20 \times 10^{-5} \ \mho$ from Experiment 2, the theoretical value is:
     \[
     \tau_{calc} = \frac{1 \times 10^{-9}}{1.20 \times 10^{-5}} \approx 8.33 \times 10^{-5} \text{ s}
     \]

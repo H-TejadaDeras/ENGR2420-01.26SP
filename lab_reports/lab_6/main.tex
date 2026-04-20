@@ -45,7 +45,7 @@
 
 \institution{Franklin W. Olin College of Engineering}
 \footinfo{Intro Microelectronic Circuits with Laboratory}
-\theday{April 7, 2026}
+\theday{April 20, 2026}
 \leadauthor{Tuthill et. al.}
 
 %----------------------------------------------------------
@@ -159,10 +159,8 @@ The theoretical incremental differential-mode voltage gain can be found
 using the relationship $A_{dm} = R_{out} \cdot G_m$. 
 Multiplying the output resistance ($7.33 \text{ M}\Omega$) 
 by the transconductance ($61.43~\mu\mho$) gives a calculated gain of approximately 450.3. 
-This computed value is close to the 215.02 gain measured from the slope of the voltage transfer 
-characteristic. The slight error of about 6\% is expected 
-and could be caused by minor variations in the 
-exact operating points.
+This computed value is far away from the 215.02 gain measured from the slope of the voltage transfer 
+characteristic and is likely caused by weird issues with the data near the point where $V_{dm} = 0$ V. The error is about 109\%.
 
 \section{Unity-Gain Follower}
 \subsection{Results}

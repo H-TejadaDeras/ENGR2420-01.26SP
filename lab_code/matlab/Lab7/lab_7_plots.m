@@ -116,7 +116,7 @@ plot(t, CH2_smooth, 'r.');
 
 xlabel('Time (s)');
 ylabel('Voltage (V)');
-title('Unity-Gain Follower (Small Signal)');
+title('Unity-Gain Follower (Small Signal) Circuit Response');
 
 % fit_eq = @(b, x) 1.53 * (1 - exp(-x / b));
 % vals_range = find(t > 0 & t < 0.5e-3);
@@ -194,29 +194,28 @@ offset_correction = mean(CH2_smooth(1:50)) - mean(CH1_smooth(1:50));
 CH2_aligned = CH2_smooth - offset_correction;
 
 figure;
-plot(t, CH1_smooth, 'b.'); hold on;
-plot(t, CH2_aligned, 'r.');
-
-xlabel('Time (s)');
-ylabel('Voltage (V)');
-title('Unity-Gain Follower (Large Signal)');
+hold on;
+plot(t, CH1_smooth, 'b.', DisplayName='Input Waveform');
+plot(t, CH2_aligned, 'r.', DisplayName='Output Waveform');
 
 vals_range = find(t > 0.00054 & t < 0.00068);
 plot_range = -0.0005:0.00001:0.0015;
 tmp = CH2_smooth(vals_range);
 fit_vals = polyfit(t(vals_range), tmp, 1);
-plot(plot_range, fit_vals(1) .* plot_range + fit_vals(2))
-
-fit_vals(1)
+plot(plot_range, fit_vals(1) .* plot_range + fit_vals(2), DisplayName=['Up-going Slew Rate: ', num2str(fit_vals(1), 3), ' V/s'])
 
 vals_range = find(t > -0.0049 & t < -0.00426);
 plot_range = -0.0054:0.00001:-0.0035;
 tmp = CH2_smooth(vals_range);
 fit_vals = polyfit(t(vals_range), tmp, 1);
-plot(plot_range, fit_vals(1) .* plot_range + fit_vals(2))
+plot(plot_range, fit_vals(1) .* plot_range + fit_vals(2), DisplayName=['Down-going Slew Rate: ', num2str(fit_vals(1), 3), ' V/s'])
 
-fit_vals(1)
+xlabel('Time (s)');
+ylabel('Voltage (V)');
+title('Unity-Gain Follower (Large Signal) Circuit Response');
+legend(Location='southoutside')
 
+% legend('Input (V)', 'Output (V)', 'Rise Fit', 'Fall Fit', 'Location','bestoutside');
 % [~, rise_idx_in] = max(diff(CH1_smooth));
 % [~, fall_idx_in] = min(diff(CH1_smooth));
 % t_rise_edge = t(rise_idx_in);

@@ -49,7 +49,7 @@
 
 \institution{Franklin W. Olin College of Engineering}
 \footinfo{Intro Microelectronic Circuits with Laboratory}
-\theday{TBD}
+\theday{April 22, 2026}
 \leadauthor{Tejada Deras et al.}
 
 %----------------------------------------------------------
@@ -83,16 +83,17 @@
     \label{fig:diagram1}
 \end{figure}
 % Make a single semilog plot for your report showing the voltage–current characterisitc, the current–voltage characteristic, and the theoretical fit, and the extracted parameters.
-    From the voltage data and the current data, we can plot the voltage–current characteristic and the current–voltage characteristic of the diode-connected transistor, along with a theoretical fit to the data. The theoretical fit is based on the exponential model of a diode, which can be expressed as:\\
-    % $V_{I-V} = e^{41.56V - 34.51}$  voltage in measure current\\
-    % $V_{V-I} = e^{39.46V - 33.46}$   current in measure voltage\\
+    From the voltage data and the current data, we can plot the voltage–current characteristic and the current–voltage characteristic of the diode-connected transistor, along with a theoretical fit to the data. The theoretical fit is based on the exponential model of a diode, which can be expressed as:
+	\begin{itemize}
+		\item Fitted Line Equation when voltage was sourced and current was measured: $\text{y = }e^{(41.56 \Omega)\text{x} - 34.51 \text{V}}$
+		\item Fitted Line Equation when current was sourced and voltage was measured: $\text{y = }e^{(39.46 \Omega)\text{x} - 33.46 \text{V}}$
+	\end{itemize}
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\linewidth]{../diagrams/lab2_exp1_plt1.pdf}
         \caption{The voltage–current characteristic, the current–voltage characteristic, and the theoretical fit for the diode-connected transistor.}\label{fig:exp1_plot}
     \end{figure} 
-
-    By taking the derivative of the voltage with respect to the current using numerical differentiation techniques, we can find the incremental resistance of the diode-connected transistor as a function of the current flowing through it. The incremental resistance can be expressed as $r_d = \frac{U_t}{I}$ where $U_t = 0.0191$ mV as estimated by the fitted line.\\
+    By taking the derivative of the voltage with respect to the current using numerical differentiation techniques, we can find the incremental resistance of the diode-connected transistor as a function of the current flowing through it. The incremental resistance can be expressed as $r_d = \frac{U_t}{I}$ where $U_t = 0.0191$ V as estimated by the fitted line.\\
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\linewidth]{../diagrams/lab2_exp1_plt2.pdf}
@@ -109,8 +110,8 @@
     which is consistent with the ideal diode equation
     \[
     I = I_s(e^{V/U_T} - 1)
-    \] The thermal voltage found from the exponential fit was $U_T = 0.0191$V. This is slightly lower than the typical room
-    temperature of about 25-26mV, but still in the correct order of magnitude. This slight variation could be caused by instrumentation resoltuion,
+    \] The thermal voltage found from the exponential fit was $U_T = 0.0191$ V. This is slightly lower than the typical room
+    temperature of about 25-26mV, but still in the correct order of magnitude. This slight variation could be caused by instrumentation resolution,
     noise, or some temperature variation. \\ \\
     Overall, the experimental results show that the diode-connected transistor behaves similarly
     to an ideal diode over a wide range of currents. While some deviations show up at very low current levels,

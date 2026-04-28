@@ -26,7 +26,7 @@
 %----------------------------------------------------------
 
 \journalname{Intro Microelectronic Circuits with Laboratory}
-\title{Lab Name}
+\title{BJT Collector-base Coupled Non-Inverting Schmitt Trigger}
 
 %----------------------------------------------------------
 % AUTHORS, AFFILIATIONS AND PROFESSOR
@@ -34,7 +34,6 @@
 
 \author[1]{Author One}
 \author[1]{Author Two}
-\author[1]{Author Three}
 
 %----------------------------------------------------------
 
@@ -61,11 +60,33 @@
     
 %----------------------------------------------------------
 
-\section{Introduction}
-
-    Welcome to \textit{tau class} for preparing your lab reports or academic articles. Throughout this guide, we will show you how to use this template and how to make modifications to this class. 
+\section{Introduction} % Intro, what it does, applications, etc.
 	
-    This class includes the following files placed in the ‘tau-class’ folder: tau.cls, tauenvs.sty, taubabel.sty and README.md. Also, a main.tex, tau.bib and some examples. 
+\section{Schematics} % Particular Schmitt Trigger setup
+	\begin{figure}
+		\centering
+		% \includegraphics[width=0.6\linewidth]{...}
+		\caption{caption here}
+		\label{fig:circuit_schematic}
+	\end{figure}
+\section{Experimental Setup} % Procedures and things
+	\subsection{Experiment 1: BJT Collector-base Coupled Non-Inverting Schmitt Trigger Characterization}
+	In this experiment, we set up the circuit as shown in Figure \ref{fig:circuit_schematic} and measured the output voltage of the circuit. We swept the voltage from $V_{ee}$ (GND) to $V_{cc}$ and then back to $V_{ee}$. We are characterizing the Upper and Lower Threshold Voltages of the circuit (represented by $V_{UT}$ and $V_{LT}$ respectively) and then calculating the Hysteresis Voltage (represented by $V_{H}$) by subtracting the Upper Threshold Voltage from the Lower Threshold Voltage.
+	\[V_{H}=V_{UT}-V_{LT}\]
+	With the same data, we also extracted the Output High and Low Voltage (represented by $V_{OH}$ and $V_{OL}$ respectively) by looking at what the average high voltage was and what the average low voltage was. 
+	\subsection{Experiment 2: Schmitt Trigger }
+\section{Results} % Graphs
+\section{Analysis} % Explain Graphs
+\section{Discussion} % Other things explained
+\section{Summary} % Learnings and things
+\section{Sources} % Sources for info and stuff
+	\begin{itemize}
+	\item  Schmitt Trigger Explained (Design of Inverting and Non-inverting Schmitt Trigger using Op-Amp) Video - \url{https://youtu.be/5-ohKRWeod4?si=8VM2gfX6_NjWiwgg}
+	\end{itemize}
+\section{notes}
+- Has to be a gap between R1 and R2 values and R3 and R4 values; R1/R2 must be smaller than R3/R4.
+- Output High is determined by voltage divider ratio betwene R2 and R4 where they are a volt div
+- When one turns one, it sucks current from the other base of other BJT and turns the other off at the same time
 
 %----------------------------------------------------------
 

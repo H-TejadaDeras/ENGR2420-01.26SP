@@ -1,27 +1,27 @@
 load('project_exp1_data')
-
-
 start = str2double(project_exp1_data_parameters.Start);
 increment = str2double(project_exp1_data_parameters.Increment);
-
 time = project_exp1_data.X * increment;
-Vin = project_exp1_data.CH1;
-Vout = project_exp1_data.CH2;
+
+Vin = smoothdata(project_exp1_data.CH1, 'movmean', 15);
+Vout = smoothdata(project_exp1_data.CH2, 'movmean',15);
 
 figure
 plot(time, Vin); hold on
 plot(time, Vout)
 xlabel('Time (s)')
 ylabel('Voltage (V)')
-legend('Vin','Vout')
+legend('Vin','Vout','Location','best')
 title('Schmitt Trigger Hysteresis')
 
-dV = diff(Vout);
-threshold = 0.5 * max(abs(dV));
+% estimate switching points from slope peaks
+dt = time(2) - time(1);
+dv = gradient(Vout) / dt;
+dv_smooth = movmean(abs(dv), 25);
 
-idx = find(abs(dV) > threshold);
-V_switch = Vin(idx);
+[pks, locs] = findpeaks(dv_smooth, 'MinPeakHeight', 0.5*max(dv_smooth));
 
+V_switch = Vin(locs);
 V_UT = max(V_switch);
 V_LT = min(V_switch);
 V_H  = V_UT - V_LT;
@@ -31,168 +31,228 @@ fprintf('LT: %.3f V\n', V_LT)
 fprintf('Hysteresis: %.3f V\n', V_H)
 
 
-
-%%
-clear
-load('project_exp2_data.mat')
-
-data_names = {
-'sine_5Hz_data'
-'sine_500Hz_data'
-'sine_50kHz_data'
-'sine_200kHz_data'
-};
-
-param_names = {
-'sine_5Hz_data_parameters'
-'sine_500Hz_data_parameters'
-'sine_50kHz_data_parameters'
-'sine_200kHz_data_parameters'
-};
+base_dir = 'C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp3';
+folders = dir(base_dir);
+folders = folders([folders.isdir]);
+folders = folders(~ismember({folders.name}, {'.','..'}));
 
 results = table();
+all_data = struct();
+valid_i = 0;
 
-for i = 1:length(data_names)
+for i = 1:length(folders)
 
-    T = eval(data_names{i});
-    P = eval(param_names{i});
+    folder_name = folders(i).name;
+    file_path = fullfile(base_dir, folder_name, 'NewFile1.csv');
 
-    increment = str2double(P.Increment);
-
-    t = T.X * increment;
-    Vin = T.CH1;
-    Vout = T.CH2;
-
-    % frequency label
-    name = data_names{i};
-    freq_str = extractBetween(name, 'sine_', '_data');
-    freq_label = string(freq_str{1});
-
-    swing = max(Vout) - min(Vout);
-
-    dVout = abs(diff(Vout));
-    sharpness = max(dVout);
-
-    % delay
-    mid_in  = (max(Vin) + min(Vin)) / 2;
-    mid_out = (max(Vout) + min(Vout)) / 2;
-
-    vin_idx  = find(Vin(1:end-1) < mid_in  & Vin(2:end) >= mid_in);
-    vout_idx = find(Vout(1:end-1) < mid_out & Vout(2:end) >= mid_out);
-
-    if ~isempty(vin_idx) && ~isempty(vout_idx)
-
-        vin_cross_time = t(vin_idx(1)) + ...
-            (mid_in - Vin(vin_idx(1))) * (t(vin_idx(1)+1)-t(vin_idx(1))) / ...
-            (Vin(vin_idx(1)+1)-Vin(vin_idx(1)));
-
-        vout_cross_time = t(vout_idx(1)) + ...
-            (mid_out - Vout(vout_idx(1))) * (t(vout_idx(1)+1)-t(vout_idx(1))) / ...
-            (Vout(vout_idx(1)+1)-Vout(vout_idx(1)));
-
-        delay_time = vout_cross_time - vin_cross_time;
-
-    else
-        delay_time = NaN;
+    if ~isfile(file_path)
+        continue
     end
 
-    % rise time
-    vmin = min(Vout);
-    vmax = max(Vout);
+    data = readmatrix(file_path);
+    t_raw = data(:,1);
+
+    % convert time into seconds if needed
+    if t_raw(end) > 1
+        t = t_raw * 1e-6;
+    else
+        t = t_raw;
+    end
+
+    Vin = movmean(data(:,2), 10);
+    Vout = movmean(data(:,3), 10);
+
+    dt = t(2) - t(1);
+
+    % frequency from folder name
+    num = regexp(folder_name,'\d+(\.\d+)?','match');
+    freq = str2double(num{1});
+    if contains(folder_name,'kHz'), freq = freq * 1e3; end
+
+    freq_label = string(folder_name);
+
+    Vin_f = Vin;
+    Vout_f = Vout;
+
+    % estimate switching thresholds from diff peaks
+    dvout_instant = abs(gradient(Vout_f) ./ dt);
+    [~, sw_idx] = findpeaks(dvout_instant, 'MinPeakHeight', max(dvout_instant)*0.4);
+
+    if length(sw_idx) > 1
+        curr_UT = max(Vin_f(sw_idx));
+        curr_LT = min(Vin_f(sw_idx));
+    else
+        curr_UT = V_UT;
+        curr_LT = V_LT;
+    end
+
+    swing = max(Vout) - min(Vout);
+    dvout_s = movmean(abs(gradient(Vout_f)/dt), 10);
+    sharpness = max(dvout_s);
+
+    % vin threshold crossings
+    vin_up_idx = find(Vin_f(1:end-1) < curr_UT & Vin_f(2:end) >= curr_UT);
+    vin_dn_idx = find(Vin_f(1:end-1) > curr_LT & Vin_f(2:end) <= curr_LT);
+
+    t_vin_rise = [];
+    t_vin_fall = [];
+
+    if ~isempty(vin_up_idx)
+        t_vin_rise = arrayfun(@(k) interp1(Vin_f(k:k+1), t(k:k+1), curr_UT), vin_up_idx);
+    end
+
+    if ~isempty(vin_dn_idx)
+        t_vin_fall = arrayfun(@(k) interp1(Vin_f(k:k+1), t(k:k+1), curr_LT), vin_dn_idx);
+    end
+
+    % vout midpoint crossings
+    v_mid = (max(Vout_f) + min(Vout_f)) / 2;
+
+    vout_up_idx = find(Vout_f(1:end-1) < v_mid & Vout_f(2:end) >= v_mid);
+    vout_dn_idx = find(Vout_f(1:end-1) > v_mid & Vout_f(2:end) <= v_mid);
+
+    t_vout_rise = [];
+    t_vout_fall = [];
+
+    if ~isempty(vout_up_idx)
+        t_vout_rise = arrayfun(@(k) interp1(Vout_f(k:k+1), t(k:k+1), v_mid), vout_up_idx);
+    end
+
+    if ~isempty(vout_dn_idx)
+        t_vout_fall = arrayfun(@(k) interp1(Vout_f(k:k+1), t(k:k+1), v_mid), vout_dn_idx);
+    end
+
+    % propagation delay calc 
+    delay_vals = [];
+
+    for k = 1:length(t_vin_rise)
+        candidates = t_vout_rise(t_vout_rise > t_vin_rise(k));
+        if ~isempty(candidates)
+            d = candidates(1) - t_vin_rise(k);
+            if d > 0 && d < 5e-6
+                delay_vals(end+1) = d;
+            end
+        end
+    end
+
+    for k = 1:length(t_vin_fall)
+        candidates = t_vout_fall(t_vout_fall > t_vin_fall(k));
+        if ~isempty(candidates)
+            d = candidates(1) - t_vin_fall(k);
+            if d > 0 && d < 5e-6
+                delay_vals(end+1) = d;
+            end
+        end
+    end
+
+    if isempty(delay_vals)
+        delay_time = NaN;
+    else
+        delay_time = median(delay_vals,'omitnan');
+    end
+
+    % rise time calc
+    vmin = min(Vout_f);
+    vmax = max(Vout_f);
     v10 = vmin + 0.1*(vmax - vmin);
     v90 = vmin + 0.9*(vmax - vmin);
 
-    %  where the signal crosses 10% and 90% on rise
-    idx10_cross = find(Vout(1:end-1) < v10 & Vout(2:end) >= v10, 1, 'first');
-    idx90_cross = find(Vout(1:end-1) < v90 & Vout(2:end) >= v90, 1, 'first');
+    rise_vals = [];
 
-    if ~isempty(idx10_cross) && ~isempty(idx90_cross)
-        %  exact time for the 10% crossing
-        t10 = t(idx10_cross) + (v10 - Vout(idx10_cross)) * (t(idx10_cross+1) - t(idx10_cross)) / (Vout(idx10_cross+1) - Vout(idx10_cross));
-        
-        % the exact time for the 90% crossing
-        t90 = t(idx90_cross) + (v90 - Vout(idx90_cross)) * (t(idx90_cross+1) - t(idx90_cross)) / (Vout(idx90_cross+1) - Vout(idx90_cross));
-        
-        rise_time = t90 - t10;
-        
-        if rise_time <= 0
-            rise_time = increment; 
+    for k = 1:length(vout_up_idx)
+        idx0 = vout_up_idx(k);
+        seg = max(1, idx0-50):min(length(Vout_f), idx0+50);
+
+        vseg = Vout_f(seg);
+        tseg = t(seg);
+
+        i10 = find(vseg >= v10, 1, 'first');
+        i90 = find(vseg >= v90, 1, 'first');
+
+        if ~isempty(i10) && ~isempty(i90) && i90 > i10
+            rise_vals(end+1) = abs(tseg(i90) - tseg(i10));
         end
-    else
-        rise_time = NaN;
     end
 
-    % slew
+    if isempty(rise_vals)
+        rise_time = NaN;
+    else
+        rise_time = median(rise_vals,'omitnan');
+    end
+
     if ~isnan(rise_time) && rise_time > 0
         slew_rate = (0.8 * (vmax - vmin)) / rise_time;
     else
         slew_rate = NaN;
     end
-    results = [results; table(freq_label, swing, sharpness, delay_time, rise_time, slew_rate)];
 
-    figure
-    plot(t, Vin, '.-'); 
-    hold on
-    plot(t, Vout)
-    title("Input vs Output at " + freq_label)
-    legend('Vin','Vout')
-    xlabel('Time (s)')
-    ylabel('Voltage (V)')
+    % store results
+    valid_i = valid_i + 1;
 
-    figure
-    plot(Vin, Vout, '.-')
-    xlabel('Vin (V)')
-    ylabel('Vout (V)')
-    title("Hysteresis Loop at " + freq_label)
+    all_data(valid_i).t = t;
+    all_data(valid_i).Vin = Vin;
+    all_data(valid_i).Vout = Vout;
+    all_data(valid_i).freq = freq;
+    all_data(valid_i).label = freq_label;
 
+    results = [results; table(freq, swing, sharpness, delay_time, rise_time, slew_rate)];
 end
 
 disp(results)
 
-
-N = height(results);
-freqs = zeros(N,1);
-
-for i = 1:N
-    label = results.freq_label(i);
-
-    if contains(label,"kHz")
-        num = extractBefore(label,"kHz");
-        freqs(i) = str2double(num) * 1e3;
-    else
-        num = extractBefore(label,"Hz");
-        freqs(i) = str2double(num);
-    end
-end
-
+% sort and clean
+results = sortrows(results,'freq');
+freqs = results.freq;
 x_khz = freqs / 1000;
 
+% smooth
+results = fillmissing(results,'linear');
 
+results.swing = smoothdata(results.swing,'movmean',20);
+results.sharpness = smoothdata(results.sharpness,'movmean',20);
+results.delay_time = smoothdata(results.delay_time,'movmean',20);
+results.slew_rate = smoothdata(results.slew_rate,'movmean',30);
 
-% swing (vmax - vmin)
+% helper for pdf export
+exportfig = @(name) exportgraphics(gcf,[name '.pdf'],'ContentType','vector');
+
+% plots + exports
+figure; semilogx(x_khz, results.swing, '.-'); xlabel('Frequency (kHz)'); ylabel('Swing (V)'); title('Output Swing vs Frequency'); exportfig('swing_plot')
+figure; semilogx(x_khz, results.sharpness, '.-'); xlabel('Frequency (kHz)'); ylabel('Sharpness (V/s)'); title('Switching Sharpness vs Frequency'); exportfig('sharpness_plot')
+figure; semilogx(x_khz, results.delay_time, '.-'); xlabel('Frequency (kHz)'); ylabel('Delay (s)'); title('Propagation Delay vs Frequency'); exportfig('delay_plot')
+figure; semilogx(x_khz, results.slew_rate, '.-'); xlabel('Frequency (kHz)'); ylabel('Slew Rate (V/s)'); title('Slew Rate vs Frequency'); exportfig('slew_plot')
+
+target_freqs = [100, 50000, 100000];
+all_freqs = [all_data.freq];
+sel = zeros(size(target_freqs));
+
+for k = 1:length(target_freqs)
+    [~, idx] = min(abs(all_freqs - target_freqs(k)));
+    sel(k) = idx;
+end
+
+% waveform plots
+for k = 1:3
+    i = sel(k);
+
+    figure
+    plot(all_data(i).t, all_data(i).Vin, all_data(i).t, all_data(i).Vout)
+    title("Waveforms: " + all_data(i).label)
+    legend('Vin','Vout')
+    xlabel('Time (s)')
+    ylabel('Voltage (V)')
+    exportgraphics(gcf,"waveform_" + k + ".pdf",'ContentType','vector')
+end
+
+% hysteresis loops
 figure
-plot(x_khz, results.swing, 'o-')
-xlabel('Frequency (kHz)')
-ylabel('Swing (V)')
-title('Output Swing vs Frequency')
-
-% transition speed
-figure
-plot(x_khz, results.sharpness, 'o-')
-xlabel('Frequency (kHz)')
-ylabel('Sharpness')
-title('Switching Sharpness vs Frequency')
-
-% delay (vin crossing point - vout crossing point)
-figure
-plot(x_khz, results.delay_time, 'o-')
-xlabel('Frequency (kHz)')
-ylabel('Delay (s)')
-title('Propagation Delay vs Frequency')
-
-% slew rate
-figure
-plot(x_khz, results.slew_rate, 'o-')
-xlabel('Frequency (kHz)')
-ylabel('Slew Rate (V/s)')
-title('Output Switching Speed vs Frequency')
+hold on
+for k = 1:3
+    i = sel(k);
+    plot(all_data(i).Vin, all_data(i).Vout, '.','DisplayName',all_data(i).label)
+end
+xlabel('Vin (V)')
+ylabel('Vout (V)')
+title('Hysteresis Loops at Selected Frequencies')
+legend
+exportfig('hysteresis_loops')

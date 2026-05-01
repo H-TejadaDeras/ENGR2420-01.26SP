@@ -12,7 +12,7 @@
 % --------------------------------------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[9pt,a4paper,column,twoside]{tau-class/tau}
+\documentclass[9pt,a4paper,twoside]{tau-class/tau}
 \usepackage[english]{babel}
 
 %% Spanish babel recomendation
@@ -45,7 +45,7 @@
 
 \institution{Franklin W. Olin College of Engineering}
 \footinfo{Intro Microelectronic Circuits with Laboratory}
-\theday{TBD}
+\theday{April 28, 2026}
 \leadauthor{TBD}
 
 %----------------------------------------------------------
@@ -61,20 +61,27 @@
 %----------------------------------------------------------
 
 \section{Introduction} % Intro, what it does, applications, etc.
-	
-\section{Schematics} % Particular Schmitt Trigger setup
+	Schmitt triggers are used in a variety of applications from trigger inputs for microcontrollers to crude 1-bit DACs to oscillators. They can be built from a variety of components; namely, MOSFETs, BJTs, and discrete Operational Amplifiers. They work because of hysteresis, the output not being directly related to the input but rather dependent on the state of the system perviously, which allows the Schmitt trigger to output a high or low voltage based on two different threshold voltages.
+\section{Circuit Description} % Particular Schmitt Trigger setup
+	The specific Schmitt trigger circuit that we will be using is called the BJT Collector-base Coupled Non-Inverting Schmitt Trigger. It is comprised of 5 resistors and 2 BJTs in a formation that resembles a SRAM cell. The output voltage will be the voltage at the collector of Q2. The circuit diagram below shows how this circuit is built. Note that for simplicity, we will assume that R1 is equal to R2 and R3 is equal to R4.
 	\begin{figure}
 		\centering
 		% \includegraphics[width=0.6\linewidth]{...}
-		\caption{caption here}
+		\caption{BJT Collector-base Coupled Non-Inverting Schmitt Trigger Circuit.}
 		\label{fig:circuit_schematic}
 	\end{figure}
+\section{Circuit Analysis}
+	Before building this circuit, we used LTSpice to simulate the circuit which allowed us to easily change the resistance values of in the circuit to see how the circuit would respond to a sine wave input. We observed the following:
+	%\begin{itemize}
+	%	\item The Output High Voltage is determined by the voltage divider ratio between R2 and R4 where they are a voltage divider.
+	%\end{itemize}
 \section{Experimental Setup} % Procedures and things
 	\subsection{Experiment 1: BJT Collector-base Coupled Non-Inverting Schmitt Trigger Characterization}
 	In this experiment, we set up the circuit as shown in Figure \ref{fig:circuit_schematic} and measured the output voltage of the circuit. We swept the voltage from $V_{ee}$ (GND) to $V_{cc}$ and then back to $V_{ee}$. We are characterizing the Upper and Lower Threshold Voltages of the circuit (represented by $V_{UT}$ and $V_{LT}$ respectively) and then calculating the Hysteresis Voltage (represented by $V_{H}$) by subtracting the Upper Threshold Voltage from the Lower Threshold Voltage.
 	\[V_{H}=V_{UT}-V_{LT}\]
 	With the same data, we also extracted the Output High and Low Voltage (represented by $V_{OH}$ and $V_{OL}$ respectively) by looking at what the average high voltage was and what the average low voltage was. 
-	\subsection{Experiment 2: Schmitt Trigger }
+	\subsection{Experiment 2: Schmitt Trigger Frequency Response Characterization}
+	\subsection{Experiment 3: Schmitt Trigger Frequency Response Trends}
 \section{Results} % Graphs
 \section{Analysis} % Explain Graphs
 \section{Discussion} % Other things explained

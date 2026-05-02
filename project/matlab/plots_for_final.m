@@ -1,3 +1,5 @@
+%% Experiment 1 Plots
+
 load('project_exp1_data')
 start = str2double(project_exp1_data_parameters.Start);
 increment = str2double(project_exp1_data_parameters.Increment);
@@ -30,8 +32,15 @@ fprintf('UT: %.3f V\n', V_UT)
 fprintf('LT: %.3f V\n', V_LT)
 fprintf('Hysteresis: %.3f V\n', V_H)
 
+figure()
+plot(Vin, Vout)
+xlabel('Input Voltage (V)')
+ylabel('Output Voltage (V)')
+title('Hysteresis Curve')
 
-base_dir = 'C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp3';
+%% Experiment 3 Plots
+base_dir = '/home/htejadaderas/Git/ENGR2420-01.26SP/project/matlab/project_exp3';
+% base_dir = 'C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp3';
 folders = dir(base_dir);
 folders = folders([folders.isdir]);
 folders = folders(~ismember({folders.name}, {'.','..'}));

@@ -63,37 +63,74 @@
 \section{Introduction} % Intro, what it does, applications, etc.
 	Schmitt triggers are used in a variety of applications from trigger inputs for microcontrollers to crude 1-bit DACs to oscillators. They can be built from a variety of components; namely, MOSFETs, BJTs, and discrete Operational Amplifiers. They work because of hysteresis, the output not being directly related to the input but rather dependent on the state of the system perviously, which allows the Schmitt trigger to output a high or low voltage based on two different threshold voltages.
 \section{Circuit Description} % Particular Schmitt Trigger setup
-	The specific Schmitt trigger circuit that we will be using is called the BJT Collector-base Coupled Non-Inverting Schmitt Trigger. It is comprised of 5 resistors and 2 BJTs in a formation that resembles a SRAM cell. The output voltage will be the voltage at the collector of Q2. The circuit diagram below shows how this circuit is built. Note that for simplicity, we will assume that R1 is equal to R2 and R3 is equal to R4.
-	\begin{figure}
+	The specific Schmitt trigger circuit that we will be using is called the BJT Collector-base Coupled Non-Inverting Schmitt Trigger. It is comprised of 5 resistors and 2 BJTs in a formation that resembles a SRAM cell. The output voltage will be the voltage at the collector of Q2. The circuit diagram below shows how this circuit is built. Note that for simplicity, we will assume that R1 is equal to R2 and R3 is equal to R4. The values of the resistors are as follows: R1 and R2 are 1.1 k$\Omega$, R3 and R4 are 49.9 k$\Omega$, and R5 is 4.9 k$\Omega$. The BJTs used are the 2N23904 BJTs.
+	\begin{figure}[H]
 		\centering
-		% \includegraphics[width=0.6\linewidth]{...}
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_diagram.pdf}
 		\caption{BJT Collector-base Coupled Non-Inverting Schmitt Trigger Circuit.}
 		\label{fig:circuit_schematic}
 	\end{figure}
-\section{Circuit Analysis}
+\section{INCOMPLETE - Circuit Analysis}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	Before building this circuit, we used LTSpice to simulate the circuit which allowed us to easily change the resistance values of in the circuit to see how the circuit would respond to a sine wave input. We observed the following:
-	%\begin{itemize}
-	%	\item The Output High Voltage is determined by the voltage divider ratio between R2 and R4 where they are a voltage divider.
-	%\end{itemize}
-\section{Experimental Setup} % Procedures and things
-	\subsection{Experiment 1: BJT Collector-base Coupled Non-Inverting Schmitt Trigger Characterization}
+	\begin{itemize}
+		\item The Output High Voltage is determined by the voltage divider ratio between R2 and R4 where they are a voltage divider.
+		\item There has to be a gap between the R1, R2 values and the R3, R4 values; R1, R2 must be smaller than R3, R4.
+		\item When Q1 or Q2 turns on, it sucks current from the other base of other BJT and turns the other BJT off at the same time.
+	\end{itemize}
+\section{Experiment 1: Schmitt Trigger Voltage Characterization}
+	\subsection{Experimental Setup}
 	In this experiment, we set up the circuit as shown in Figure \ref{fig:circuit_schematic} and measured the output voltage of the circuit. We swept the voltage from $V_{ee}$ (GND) to $V_{cc}$ and then back to $V_{ee}$. We are characterizing the Upper and Lower Threshold Voltages of the circuit (represented by $V_{UT}$ and $V_{LT}$ respectively) and then calculating the Hysteresis Voltage (represented by $V_{H}$) by subtracting the Upper Threshold Voltage from the Lower Threshold Voltage.
 	\[V_{H}=V_{UT}-V_{LT}\]
-	With the same data, we also extracted the Output High and Low Voltage (represented by $V_{OH}$ and $V_{OL}$ respectively) by looking at what the average high voltage was and what the average low voltage was. 
-	\subsection{Experiment 2: Schmitt Trigger Frequency Response Characterization}
-	\subsection{Experiment 3: Schmitt Trigger Frequency Response Trends}
-\section{Results} % Graphs
-\section{Analysis} % Explain Graphs
-\section{Discussion} % Other things explained
+	With the same data, we also extracted the Output High and Low Voltage (represented by $V_{OH}$ and $V_{OL}$ respectively) by looking at what the average high voltage was and what the average low voltage was. Afterwards, we plotted the input voltage vs. the output voltage to get a hysteresis curve which shows us the output high and low voltages along with the low and high threshold voltages. This plot fully characterizes the voltage characteristics of the Schmitt trigger.\\
+	\\
+	\textit{Experiment Deliverables:} Hysteresis Curve Plot; Table of Upper Threshold, Lower Threshold, Output High, Output Low, and Hysteresis Voltages; Plot of Output Voltage on top of the Input Voltage.
+	\subsection{Results}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp1_vin_vout.pdf}
+		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
+		\label{fig:exp1_vin_vout}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp1_hysteresis_curve.pdf}
+		\caption{Hysteresis Curve of Schmitt Trigger.}
+		\label{fig:exp1_hysteresis_curve}
+	\end{figure}
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c c c c c}
+			Upper Threshold Voltage, $V_{UT}$ & Lower Threshold Voltage, $V_{LT}$ & Output High Voltage, $V_{OH}$ & Output Low Voltage, $V_{OL}$\\
+			0.843 V & 0.421 V & 4.92 V & 0.123 V\\
+		\end{tabular}
+		\begin{tabular}{c}
+			Hysteresis Voltage, $V_H$\\
+			0.421 V
+		\end{tabular}
+		\caption{Schmitt Trigger Voltage Characteristics Values.}
+		\label{table:exp1_voltages}
+	\end{table}
+	\subsection{Analysis}
+	\subsection{Discussion}
+\section{Experiment 2: Schmitt Trigger Frequency Response Characterization}
+	\subsection{Experimental Setup}
+	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at 5 Hz.
+	\\
+	\textit{Experiment Deliverables:} TBD
+	\subsection{Results}
+	\subsection{Analysis}
+	\subsection{Discussion}
+\section{Experiment 3: Schmitt Trigger Frequency Response Trends}
+	\subsection{Experimental Setup}
+	In this experiment
+	\subsection{Results}
+	\subsection{Analysis}
+	\subsection{Discussion}
 \section{Summary} % Learnings and things
 \section{Sources} % Sources for info and stuff
 	\begin{itemize}
 	\item  Schmitt Trigger Explained (Design of Inverting and Non-inverting Schmitt Trigger using Op-Amp) Video - \url{https://youtu.be/5-ohKRWeod4?si=8VM2gfX6_NjWiwgg}
 	\end{itemize}
-\section{notes}
-- Has to be a gap between R1 and R2 values and R3 and R4 values; R1/R2 must be smaller than R3/R4.
-- Output High is determined by voltage divider ratio betwene R2 and R4 where they are a volt div
-- When one turns one, it sucks current from the other base of other BJT and turns the other off at the same time
 
 %----------------------------------------------------------
 

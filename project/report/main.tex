@@ -116,16 +116,23 @@
 	This experiment shows how the Schmitt trigger works by having two different thresholds for its output voltages. This particular circuit essentially has a rail-to-rail output.
 \section{Experiment 2: Schmitt Trigger Frequency Response Characterization}
 	\subsection{Experimental Setup}
-	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at 5 Hz.
+	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at 5 Hz. We measured the slew rate by measuring the slope of the rising edge of the signal on the output of the circuit from 10\% of the output voltage to 90\% of the output voltage. This value represents how fast the circuit can drive a change in voltage.
+	\[SR=\frac{t(0.9 V_{OH}) - t(0.1 V_{OH})}{2}\]
+	The output swing was measured by getting the average output high value and subtracting it from the average output low value. This value tells us how much the output can vary in voltage.
+	\[V_{OS}=V_{OH}-V_{OL}\]
+	The switching sharpness was measured by taking the derivative of the output voltage and finding the maximum value of the derivative. This value represents how maximum rate at which the circuit can drive a change in voltage.
+	\[SS=max\left(\frac{d}{dt}[V_{out}]\right)\]
+	The propagation delay
 	\\
-	\textit{Experiment Deliverables:} TBD
+	\textit{Experiment Deliverables:} Plots showing the output Propagation Delay, Switching Sharpness, Slew Rate, and Output Swing for the given input signal.
 	\subsection{Results}
 	\subsection{Analysis}
 	\subsection{Discussion}
 \section{Experiment 3: Schmitt Trigger Frequency Response Trends}
 	\subsection{Experimental Setup}
 	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at various frequencies between 5 Hz and 200 kHz. We wanted to see how the behavior of the circuit would change based on the input waveform frequency by measuring the propagation delay, switching sharpness, slew rate, and output swing. The propagation delay describes how long it takes for the circuit to respond to the input. The slew rate describes how long it takes the circuit to drive the output. The output swing describes the range of voltage the circuit can drive on the output side. The switching sharpness describes how clear the transition was between high and low.\\
-	\textit{Experiment Deliverables:} Plots showing Hysteresis Curve/Loop, Propagation Delay, Switching Sharpness, Slew Rate, Output Swing varying with Frequency; Plots of input and output waveforms at a low, medium, and high frequency.
+	\\
+	\textit{Experiment Deliverables:} Plots showing Hysteresis Curve/Loop, Propagation Delay, Switching Sharpness, Slew Rate, and Output Swing varying with Frequency; Plots of input and output waveforms at a low, medium, and high frequency.
 	\subsection{INCOMPLETE - Results}
 	\begin{figure}[H]
 		\centering
@@ -147,7 +154,7 @@
 		\caption{Propagation delay relationship with frequency.}
 		\label{fig:exp3_delay_plot}
 	\end{figure}
-	This plot shows how the propagation delay increases as frequency increases.
+	This plot shows how the propagation delay increases as frequency increases.???
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_sharpness_plot.pdf}

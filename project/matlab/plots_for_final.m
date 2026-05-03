@@ -56,7 +56,8 @@ xlabel('Input Voltage (V)')
 ylabel('Output Voltage (V)')
 title('Hysteresis Curve')
 
-base_dir = 'C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp3';
+base_dir = '/home/htejadaderas/Git/ENGR2420-01.26SP/project/matlab/project_exp3';
+% base_dir = 'C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp3';
 folders = dir(base_dir);
 folders = folders([folders.isdir]);
 folders = folders(~ismember({folders.name}, {'.','..'}));
@@ -279,10 +280,10 @@ results.slew_rate = smoothdata(results.slew_rate,'movmean',30);
 exportfig = @(name) exportgraphics(gcf,[name '.pdf'],'ContentType','vector');
 
 % plots + exports
-figure; semilogx(x_khz, results.swing, '.-'); xlabel('Frequency (kHz)'); ylabel('Swing (V)'); title('Output Swing vs Frequency'); exportfig('swing_plot')
-figure; semilogx(x_khz, results.sharpness, '.-'); xlabel('Frequency (kHz)'); ylabel('Sharpness (V/s)'); title('Switching Sharpness vs Frequency'); exportfig('sharpness_plot')
-figure; semilogx(x_khz, results.delay_time, '.-'); xlabel('Frequency (kHz)'); ylabel('Delay (s)'); title('Propagation Delay vs Frequency'); exportfig('delay_plot')
-figure; semilogx(x_khz, results.slew_rate, '.-'); xlabel('Frequency (kHz)'); ylabel('Slew Rate (V/s)'); title('Slew Rate vs Frequency'); exportfig('slew_plot')
+figure; semilogx(x_khz, results.swing, '.-'); xlabel('Frequency (kHz)'); ylabel('Swing (V)'); title('Output Swing vs Frequency'); exportfig('project_exp3_swing_plot')
+figure; semilogx(x_khz, results.sharpness, '.-'); xlabel('Frequency (kHz)'); ylabel('Sharpness (V/s)'); title('Switching Sharpness vs Frequency'); exportfig('project_exp3_sharpness_plot')
+figure; semilogx(x_khz, results.delay_time, '.-'); xlabel('Frequency (kHz)'); ylabel('Delay (s)'); title('Propagation Delay vs Frequency'); exportfig('project_exp3_delay_plot')
+figure; semilogx(x_khz, results.slew_rate, '.-'); xlabel('Frequency (kHz)'); ylabel('Slew Rate (V/s)'); title('Slew Rate vs Frequency'); exportfig('project_exp3_slew_plot')
 
 target_freqs = [100, 50000, 100000];
 all_freqs = [all_data.freq];
@@ -303,7 +304,7 @@ for k = 1:3
     legend('Vin','Vout')
     xlabel('Time (s)')
     ylabel('Voltage (V)')
-    exportgraphics(gcf,"waveform_" + k + ".pdf",'ContentType','vector')
+    exportgraphics(gcf,"project_exp3_waveform_" + k + ".pdf",'ContentType','vector')
 end
 
 % hysteresis loops
@@ -317,4 +318,4 @@ xlabel('Vin (V)')
 ylabel('Vout (V)')
 title('Hysteresis Loops at Selected Frequencies')
 legend
-exportfig('hysteresis_loops')
+exportfig('project_exp3_hysteresis_loops')

@@ -26,7 +26,7 @@
 %----------------------------------------------------------
 
 \journalname{Intro Microelectronic Circuits with Laboratory}
-\title{BJT Collector-base Coupled Non-Inverting Schmitt Trigger}
+\title{BJT Collector-base Coupled Non-Inverting Schmitt Trigger Lab}
 
 %----------------------------------------------------------
 % AUTHORS, AFFILIATIONS AND PROFESSOR
@@ -111,7 +111,9 @@
 		\label{table:exp1_voltages}
 	\end{table}
 	\subsection{Analysis}
+	We inputted a 5 Hz, 50 \% duty cycle triangle wave into the circuit. From the data we collected, we were able to see how there are two different thresholds at which the output voltage changes from high to low or vice versa. This validates that there is hysteresis in the circuit which is also seen in the hysteresis curve plot.
 	\subsection{Discussion}
+	This experiment shows how the Schmitt trigger works by having two different thresholds for its output voltages. This particular circuit essentially has a rail-to-rail output.
 \section{Experiment 2: Schmitt Trigger Frequency Response Characterization}
 	\subsection{Experimental Setup}
 	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at 5 Hz.
@@ -122,14 +124,73 @@
 	\subsection{Discussion}
 \section{Experiment 3: Schmitt Trigger Frequency Response Trends}
 	\subsection{Experimental Setup}
-	In this experiment
-	\subsection{Results}
+	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at various frequencies between 5 Hz and 200 kHz. We wanted to see how the behavior of the circuit would change based on the input waveform frequency by measuring the propagation delay, switching sharpness, slew rate, and output swing. The propagation delay describes how long it takes for the circuit to respond to the input. The slew rate describes how long it takes the circuit to drive the output. The output swing describes the range of voltage the circuit can drive on the output side. The switching sharpness describes how clear the transition was between high and low.\\
+	\textit{Experiment Deliverables:} Plots showing Hysteresis Curve/Loop, Propagation Delay, Switching Sharpness, Slew Rate, Output Swing varying with Frequency; Plots of input and output waveforms at a low, medium, and high frequency.
+	\subsection{INCOMPLETE - Results}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_slew_plot.pdf}
+		\caption{Slew rate relationship with frequency.}
+		\label{fig:exp3_slew_plot}
+	\end{figure}
+	This plot shows how the slew rate changes with frequency. The slew rate decreases because the circuit has less time to drive up or down the circuit for a given period the higher the frequency becomes.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_swing_plot.pdf}
+		\caption{Output swing relationship with frequency.}
+		\label{fig:exp3_swing_plot}
+	\end{figure}
+	This plot shows how the output swing decreases with frequency. This is because at higher frequencies, the circuit does not have enough time to drive the output high enough to it's theoretical output high voltage or low enough to its theoretical output low voltage.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_delay_plot.pdf}
+		\caption{Propagation delay relationship with frequency.}
+		\label{fig:exp3_delay_plot}
+	\end{figure}
+	This plot shows how the propagation delay increases as frequency increases.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_sharpness_plot.pdf}
+		\caption{Switching sharpness relationship with frequency.}
+		\label{fig:exp3_sharpness_plot}
+	\end{figure}
+	This plot shows how the circuit's output becomes less sharp has the frequency increases. This is also because the circuit does not have enough time to drive the output high or low enough the higher the frequency becomes.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_hysteresis_loops.pdf}
+		\caption{Hysteresis loop relationship with frequency.}
+		\label{fig:exp3_hysteresis_loops}
+	\end{figure}
+	As the frequency increases, the hysteresis loop becomes less and less sharp and becomes wider. This is because of how the slew rate and propagation delay change as frequency increases. As the slew rate decreases, the less steep the slope of the change from output high to output low and vice versa are. The larger the propagation delay, the wider the hysteresis loop becomes. This is because the threshold voltages move???
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_waveform_1.pdf}
+		\caption{Low frequency waveform input output relationship.}
+		\label{fig:exp3_waveform_slow}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_waveform_2.pdf}
+		\caption{Medium frequency waveform input output relationship.}
+		\label{fig:exp3_waveform_medium}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_waveform_3.pdf}
+		\caption{High frequency waveform input output relationship.}
+		\label{fig:exp3_waveform_high}
+	\end{figure}
 	\subsection{Analysis}
+	As the frequency increases past 10 kHz, the output of the circuit starts to struggle to reach the output high and low values. By 100 kHz, the slowness of the change in output voltage becomes more noticeable. This helps explain why Schmitt triggers are rated for certain speeds, at very high speeds they stop working as expected.
 	\subsection{Discussion}
+	In most of the figures (specifically Figures \ref{fig:exp3_slew_plot} through \ref{fig:exp3_hysteresis_loops}), we observed jagged corners. We think this may be because of the sampling rate of the oscilloscope used when measuring the voltage at the input and output of the circuit because it was changed about every decade around the frequency where we observe the corner. This is because the sampling rate determines the resolution of the samples (and how far apart they are in time) which would affect the rates calculated using those time increments. In addition, these jumps occur around the same frequencies across all of the plots which points towards this being a measurement error.
 \section{Summary} % Learnings and things
+	In this lab, we learned a lot about how the characteristics of the Schmitt trigger change with the selection of resistors used and input waveform frequency. The particular Schmitt trigger that we are using is usable until about 200 kHz but starts showing issues with its output around 100 kHz. We also learned that the particular resistors that we used affected the output high and low voltages a lot.
 \section{Sources} % Sources for info and stuff
 	\begin{itemize}
-	\item  Schmitt Trigger Explained (Design of Inverting and Non-inverting Schmitt Trigger using Op-Amp) Video - \url{https://youtu.be/5-ohKRWeod4?si=8VM2gfX6_NjWiwgg}
+	\item Schmitt Trigger Article - \url{https://en.wikipedia.org/wiki/Schmitt_trigger}
+	\item Common Collector Amplifier Article - \url{https://www.electronics-tutorials.ws/amplifier/common-collector-amplifier.html}
+	\item Schmitt Trigger Explained (Design of Inverting and Non-inverting Schmitt Trigger using Op-Amp) Video - \url{https://youtu.be/5-ohKRWeod4?si=8VM2gfX6_NjWiwgg}
 	\end{itemize}
 
 %----------------------------------------------------------

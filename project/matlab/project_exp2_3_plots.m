@@ -351,7 +351,6 @@ function rise_fall = rise_fall_calc(t, Vout, dVout, freq)
     rise_fall.end_fall = end_fall;
 end
 
-%%
 % Waveform Plots
 load("project_exp2_data_waveforms.mat")
 
@@ -392,4 +391,29 @@ plot(t, Vout, '.', DisplayName='V_{out}')
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 title('100 kHz Waveform')
+legend()
+
+% Hysteresis Curve
+
+figure()
+hold on;
+
+Vin = movmean(data_100Hz.CH1, max(3, round(length(t)/200)));
+Vout = movmean(data_100Hz.CH2, max(3, round(length(t)/200)));
+
+plot(Vin, Vout, '.', DisplayName='100 Hz')
+
+Vin = movmean(data_50kHz.Var2, max(3, round(length(t)/200)));
+Vout = movmean(data_50kHz.Var3, max(3, round(length(t)/200)));
+
+plot(Vin, Vout, '.', DisplayName='50 kHz')
+
+Vin = movmean(data_100kHz.Var2, max(3, round(length(t)/200)));
+Vout = movmean(data_100kHz.Var3, max(3, round(length(t)/200)));
+
+plot(Vin, Vout, '.', DisplayName='100 kHz')
+
+xlabel('Input Voltage (V)')
+ylabel('Output Voltage (V)')
+title('Hysteresis Loops at Selected Frequencies')
 legend()

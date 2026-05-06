@@ -77,13 +77,12 @@ swing_s = movmean(results.swing, w);
 delay_s = movmean(results.delay, w);
 rise_s  = movmean(results.rise_time, w);
 fall_s  = movmean(results.fall_time, w);
-
 % plot slew rate vs frequency
 figure;
 semilogx(freq_s, slew_s, 'o-');
 xlabel('Frequency (Hz)');
-ylabel('Slew Rate (V/s)');
-title('Frequency vs Slew Rate');
+ylabel('Sharpness (V/s)');
+title('Frequency vs Sharpness');
 
 % plot output swing vs frequency
 figure;
@@ -282,29 +281,58 @@ ylabel('Voltage (V)')
 title('50 kHz Time Response')
 legend('Vin','Vout','Location','bestoutside')
 
+dVout_mag = movmean(abs(dVout), 25);
+
+dt = mean(diff(t));
+min_dist_time = 1e-6; 
+min_dist_samples = round(min_dist_time / dt);
+
+[pks, locs] = findpeaks(dVout_mag,'MinPeakHeight', 0.5*max(dVout_mag), 'MinPeakDistance', min_dist_samples);
+
 figure
+
+subplot(2,1,1)
 plot(t, Vout, '.'); hold on
 plot(t(i1r:i2r), polyval(p_rise,t(i1r:i2r)), '-')
 plot(t(i1f:i2f), polyval(p_fall,t(i1f:i2f)), '-')
+
 xlabel('Time (s)')
 ylabel('Voltage (V)')
-title('Slew Rate Extraction')
-legend('Vout','Rising Fit','Falling Fit','Location','bestoutside')
-text(t(i1r) + 0.01*10^-4, -0.5, sprintf('rise slew = %.3e\nfall slew = %.3e', slew_rise, slew_fall))
+title('Sharpness Extraction')
+
+legend('Vout', sprintf('Rise Fit (%.2e V/s)', slew_rise), sprintf('Fall Fit (%.2e V/s)', slew_fall), 'Location','bestoutside')
+
+subplot(2,1,2)
+plot(t, dVout_mag, '.'); hold on
+plot(t(locs), pks, 'o', 'MarkerSize', 7, 'LineWidth', 2)
+
+xlabel('Time (s)')
+ylabel('|dVout/dt| (V/s)')
+title('Derivative Peak Detection')
+
+legend('|dVout/dt|', sprintf('Detected Peaks (N = %d)', numel(pks)), 'Location','bestoutside')
 
 avg_delay = delay_calcs(t, Vin, Vout);
 
 figure
-plot(t, Vin, '.'); hold on
-plot(t, Vout, '.')
-yline(v_thresh)
-plot(t_in, v_thresh*ones(size(t_in)), 'o', 'MarkerSize',7, 'LineWidth', 2)
-plot(t_out, v_thresh*ones(size(t_out)), 'x', 'MarkerSize',7, 'LineWidth', 2)
+
+h1 = plot(t, Vin, '.'); hold on
+h2 = plot(t, Vout, '.');
+h3 = yline(v_thresh);
+
+h4 = plot(t_in, v_thresh*ones(size(t_in)), 'o', 'MarkerSize', 7, 'LineWidth', 2);
+h5 = plot(t_out, v_thresh*ones(size(t_out)), 'x', 'MarkerSize', 7, 'LineWidth', 2);
+
+h6 = plot(nan, nan, 'w-', 'LineWidth', 2);
+
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 title('Propagation Delay Extraction')
-legend('Vin','Vout','Threshold','Vin crossings','Vout crossings','Location','bestoutside')
-text(0.2e-4, v_thresh + 0.1, sprintf('delay = %.3e s', avg_delay))
+
+legend([h1 h2 h3 h4 h5 h6], ...
+{'Vin','Vout','Threshold','Vin Crossings','Vout Crossings', ...
+sprintf('Avg Delay = %.2e s', avg_delay)}, ...
+'Location','bestoutside')
 
 vout_min = min(Vout);
 vout_max = max(Vout);
@@ -313,11 +341,13 @@ v10 = vout_min + 0.1*(vout_max - vout_min);
 v90 = vout_min + 0.9*(vout_max - vout_min);
 
 figure
+
 plot(t, Vout, '.'); hold on
 yline(v10, '--')
 yline(v90, '--')
+
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 title('Rise and Fall Time Extraction')
-legend('Vout','10% level','90% level','Location','bestoutside')
-text(0.02e-4, 2.5, sprintf('rise = %.3e s\nfall = %.3e s', avg_rise, avg_fall))
+
+legend('Vout', '10% Level', '90% Level', sprintf('Rise Time = %.2e s', avg_rise), sprintf('Fall Time = %.2e s', avg_fall), 'Location','bestoutside')

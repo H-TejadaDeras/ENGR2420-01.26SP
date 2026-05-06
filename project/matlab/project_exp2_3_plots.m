@@ -1,9 +1,139 @@
+%% exp 2
+
+clear;
+
+base_dir = "C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp2";
+
+folder_name = "sine_50kHz";
+file_path = fullfile(base_dir, folder_name, 'NewFile1.csv');
+
+table_opts = detectImportOptions(file_path);
+table_opts.VariableNames = {'X','CH1','CH2'};
+data = readtable(file_path, table_opts);
+data_parameters = readtable(file_path, Range='D1:E2', ReadVariableNames=true);
+
+t = data.X .* data_parameters.Increment;
+
+Vin  = smoothdata(data.CH1,'movmean',15);
+Vout = smoothdata(data.CH2,'movmean',15);
+
+dt = mean(diff(t));
+dVout = gradient(Vout)/dt;
+
+freq = 50000;
+
+UT = 0.843;
+LT = 0.421;
+v_thresh = (UT + LT)/2;
+
+[slew, swing] = slew_swing_calcs(Vout, dVout);
+rise_fall = rise_fall_calc(t, Vout, dVout, freq);
+
+avg_rise = rise_fall.avg_rise;
+avg_fall = rise_fall.avg_fall;
+
+t_in = t(Vin(1:end-1) < v_thresh & Vin(2:end) >= v_thresh);
+t_out = t(Vout(1:end-1) < v_thresh & Vout(2:end) >= v_thresh);
+
+[~, r] = max(dVout);
+[~, f] = min(dVout);
+
+win = 20;
+
+i1r = max(1, r-win); i2r = min(length(t), r+win);
+i1f = max(1, f-win); i2f = min(length(t), f+win);
+
+p_rise = polyfit(t(i1r:i2r), Vout(i1r:i2r), 1);
+p_fall = polyfit(t(i1f:i2f), Vout(i1f:i2f), 1);
+
+slew_rise = p_rise(1);
+slew_fall = p_fall(1);
+
+figure
+plot(t, Vin, '.'); hold on
+plot(t, Vout, '.')
+xlabel('Time (s)')
+ylabel('Voltage (V)')
+title('50 kHz Time Response')
+legend('Vin','Vout','Location','bestoutside')
+
+dVout_mag = movmean(abs(dVout), 25);
+
+dt = mean(diff(t));
+min_dist_time = 1e-6; 
+min_dist_samples = round(min_dist_time / dt);
+
+[pks, locs] = findpeaks(dVout_mag,'MinPeakHeight', 0.5*max(dVout_mag), 'MinPeakDistance', min_dist_samples);
+
+figure
+
+subplot(2,1,1)
+plot(t, Vout, '.'); hold on
+plot(t(i1r:i2r), polyval(p_rise,t(i1r:i2r)), '-')
+plot(t(i1f:i2f), polyval(p_fall,t(i1f:i2f)), '-')
+
+xlabel('Time (s)')
+ylabel('Voltage (V)')
+title('Sharpness Extraction')
+
+legend('Vout', sprintf('Rise Fit (%.2e V/s)', slew_rise), sprintf('Fall Fit (%.2e V/s)', slew_fall), 'Location','bestoutside')
+
+subplot(2,1,2)
+plot(t, dVout_mag, '.'); hold on
+plot(t(locs), pks, 'o', 'MarkerSize', 7, 'LineWidth', 2)
+
+xlabel('Time (s)')
+ylabel('|dVout/dt| (V/s)')
+title('Derivative Peak Detection')
+
+legend('|dVout/dt|', sprintf('Detected Peaks (N = %d)', numel(pks)), 'Location','bestoutside')
+
+avg_delay = delay_calcs(t, Vin, Vout);
+
+figure
+
+h1 = plot(t, Vin, '.'); hold on
+h2 = plot(t, Vout, '.');
+h3 = yline(v_thresh);
+
+h4 = plot(t_in, v_thresh*ones(size(t_in)), 'o', 'MarkerSize', 7, 'LineWidth', 2);
+h5 = plot(t_out, v_thresh*ones(size(t_out)), 'x', 'MarkerSize', 7, 'LineWidth', 2);
+
+h6 = plot(nan, nan, 'w-', 'LineWidth', 2);
+
+xlabel('Time (s)')
+ylabel('Voltage (V)')
+title('Propagation Delay Extraction')
+
+legend([h1 h2 h3 h4 h5 h6], ...
+{'Vin','Vout','Threshold','Vin Crossings','Vout Crossings', ...
+sprintf('Avg Delay = %.2e s', avg_delay)}, ...
+'Location','bestoutside')
+
+vout_min = min(Vout);
+vout_max = max(Vout);
+
+v10 = vout_min + 0.1*(vout_max - vout_min);
+v90 = vout_min + 0.9*(vout_max - vout_min);
+
+figure
+
+plot(t, Vout, '.'); hold on
+yline(v10, '--')
+yline(v90, '--')
+
+xlabel('Time (s)')
+ylabel('Voltage (V)')
+title('Rise and Fall Time Extraction')
+
+legend('Vout', '10% Level', '90% Level', sprintf('Rise Time = %.2e s', avg_rise), sprintf('Fall Time = %.2e s', avg_fall), 'Location','bestoutside')
+
 %% exp3
 
 clear;
 
-base_dir = "C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp3";
-%base_dir = '/home/htejadaderas/Git/ENGR2420-01.26SP/project/matlab/project_exp3/1 kHz/NewFile1.csv';
+% base_dir = "C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp3";
+base_dir = '/home/htejadaderas/Git/ENGR2420-01.26SP/project/matlab/project_exp3';
 
 % list of all folders in dataset directory
 folders = dir(base_dir);
@@ -221,133 +351,45 @@ function rise_fall = rise_fall_calc(t, Vout, dVout, freq)
     rise_fall.end_fall = end_fall;
 end
 
+%%
+% Waveform Plots
+load("project_exp2_data_waveforms.mat")
 
-%% exp 2
+t = data_100Hz.X .* data_parameters_100Hz.Increment;
+Vin = movmean(data_100Hz.CH1, max(3, round(length(t)/200)));
+Vout = movmean(data_100Hz.CH2, max(3, round(length(t)/200)));
 
-clear;
-
-base_dir = "C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp2";
-
-folder_name = "sine_50kHz";
-file_path = fullfile(base_dir, folder_name, 'NewFile1.csv');
-
-table_opts = detectImportOptions(file_path);
-table_opts.VariableNames = {'X','CH1','CH2'};
-data = readtable(file_path, table_opts);
-data_parameters = readtable(file_path, Range='D1:E2', ReadVariableNames=true);
-
-t = data.X .* data_parameters.Increment;
-
-Vin  = smoothdata(data.CH1,'movmean',15);
-Vout = smoothdata(data.CH2,'movmean',15);
-
-dt = mean(diff(t));
-dVout = gradient(Vout)/dt;
-
-freq = 50000;
-
-UT = 0.843;
-LT = 0.421;
-v_thresh = (UT + LT)/2;
-
-[slew, swing] = slew_swing_calcs(Vout, dVout);
-rise_fall = rise_fall_calc(t, Vout, dVout, freq);
-
-avg_rise = rise_fall.avg_rise;
-avg_fall = rise_fall.avg_fall;
-
-t_in = t(Vin(1:end-1) < v_thresh & Vin(2:end) >= v_thresh);
-t_out = t(Vout(1:end-1) < v_thresh & Vout(2:end) >= v_thresh);
-
-[~, r] = max(dVout);
-[~, f] = min(dVout);
-
-win = 20;
-
-i1r = max(1, r-win); i2r = min(length(t), r+win);
-i1f = max(1, f-win); i2f = min(length(t), f+win);
-
-p_rise = polyfit(t(i1r:i2r), Vout(i1r:i2r), 1);
-p_fall = polyfit(t(i1f:i2f), Vout(i1f:i2f), 1);
-
-slew_rise = p_rise(1);
-slew_fall = p_fall(1);
-
-figure
-plot(t, Vin, '.'); hold on
-plot(t, Vout, '.')
+figure()
+hold on;
+plot(t, Vin, '.', DisplayName='V_{in}')
+plot(t, Vout, '.', DisplayName='V_{out}')
 xlabel('Time (s)')
 ylabel('Voltage (V)')
-title('50 kHz Time Response')
-legend('Vin','Vout','Location','bestoutside')
+title('100 Hz Waveform')
+legend()
 
-dVout_mag = movmean(abs(dVout), 25);
+t = data_50kHz.Var1 .* data_parameters_50kHz.Increment;
+Vin = movmean(data_50kHz.Var2, max(3, round(length(t)/200)));
+Vout = movmean(data_50kHz.Var3, max(3, round(length(t)/200)));
 
-dt = mean(diff(t));
-min_dist_time = 1e-6; 
-min_dist_samples = round(min_dist_time / dt);
-
-[pks, locs] = findpeaks(dVout_mag,'MinPeakHeight', 0.5*max(dVout_mag), 'MinPeakDistance', min_dist_samples);
-
-figure
-
-subplot(2,1,1)
-plot(t, Vout, '.'); hold on
-plot(t(i1r:i2r), polyval(p_rise,t(i1r:i2r)), '-')
-plot(t(i1f:i2f), polyval(p_fall,t(i1f:i2f)), '-')
-
+figure()
+hold on;
+plot(t, Vin, '.', DisplayName='V_{in}')
+plot(t, Vout, '.', DisplayName='V_{out}')
 xlabel('Time (s)')
 ylabel('Voltage (V)')
-title('Sharpness Extraction')
+title('50 kHz Waveform')
+legend()
 
-legend('Vout', sprintf('Rise Fit (%.2e V/s)', slew_rise), sprintf('Fall Fit (%.2e V/s)', slew_fall), 'Location','bestoutside')
+t = data_100kHz.Var1 .* data_parameters_100kHz.Increment;
+Vin = movmean(data_100kHz.Var2, max(3, round(length(t)/200)));
+Vout = movmean(data_100kHz.Var3, max(3, round(length(t)/200)));
 
-subplot(2,1,2)
-plot(t, dVout_mag, '.'); hold on
-plot(t(locs), pks, 'o', 'MarkerSize', 7, 'LineWidth', 2)
-
-xlabel('Time (s)')
-ylabel('|dVout/dt| (V/s)')
-title('Derivative Peak Detection')
-
-legend('|dVout/dt|', sprintf('Detected Peaks (N = %d)', numel(pks)), 'Location','bestoutside')
-
-avg_delay = delay_calcs(t, Vin, Vout);
-
-figure
-
-h1 = plot(t, Vin, '.'); hold on
-h2 = plot(t, Vout, '.');
-h3 = yline(v_thresh);
-
-h4 = plot(t_in, v_thresh*ones(size(t_in)), 'o', 'MarkerSize', 7, 'LineWidth', 2);
-h5 = plot(t_out, v_thresh*ones(size(t_out)), 'x', 'MarkerSize', 7, 'LineWidth', 2);
-
-h6 = plot(nan, nan, 'w-', 'LineWidth', 2);
-
+figure()
+hold on;
+plot(t, Vin, '.', DisplayName='V_{in}')
+plot(t, Vout, '.', DisplayName='V_{out}')
 xlabel('Time (s)')
 ylabel('Voltage (V)')
-title('Propagation Delay Extraction')
-
-legend([h1 h2 h3 h4 h5 h6], ...
-{'Vin','Vout','Threshold','Vin Crossings','Vout Crossings', ...
-sprintf('Avg Delay = %.2e s', avg_delay)}, ...
-'Location','bestoutside')
-
-vout_min = min(Vout);
-vout_max = max(Vout);
-
-v10 = vout_min + 0.1*(vout_max - vout_min);
-v90 = vout_min + 0.9*(vout_max - vout_min);
-
-figure
-
-plot(t, Vout, '.'); hold on
-yline(v10, '--')
-yline(v90, '--')
-
-xlabel('Time (s)')
-ylabel('Voltage (V)')
-title('Rise and Fall Time Extraction')
-
-legend('Vout', '10% Level', '90% Level', sprintf('Rise Time = %.2e s', avg_rise), sprintf('Fall Time = %.2e s', avg_fall), 'Location','bestoutside')
+title('100 kHz Waveform')
+legend()

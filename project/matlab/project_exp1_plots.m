@@ -9,8 +9,8 @@ Vin = smoothdata(project_exp1_data.CH1, 'movmean', 15);
 Vout = smoothdata(project_exp1_data.CH2, 'movmean', 15);
 
 figure
-plot(time, Vin); hold on
-plot(time, Vout)
+plot(time, Vin, '.'); hold on
+plot(time, Vout, '.')
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 legend('Vin','Vout','Location','best')
@@ -49,7 +49,7 @@ fprintf('LT: %.3f V\n', V_LT)
 fprintf('Hysteresis: %.3f V\n', V_H)
 
 figure()
-plot(Vin, Vout)
+plot(Vin, Vout, '.')
 xlabel('Input Voltage (V)')
 ylabel('Output Voltage (V)')
 title('Hysteresis Curve')

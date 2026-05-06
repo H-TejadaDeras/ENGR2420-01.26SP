@@ -32,8 +32,8 @@
 % AUTHORS, AFFILIATIONS AND PROFESSOR
 %----------------------------------------------------------
 
-\author[1]{Author One}
-\author[1]{Author Two}
+\author[1]{Henry Tejada Deras}
+\author[1]{Elias Tuthill}
 
 %----------------------------------------------------------
 
@@ -46,7 +46,7 @@
 \institution{Franklin W. Olin College of Engineering}
 \footinfo{Intro Microelectronic Circuits with Laboratory}
 \theday{April 28, 2026}
-\leadauthor{TBD}
+\leadauthor{Tejada Deras et al.}
 
 %----------------------------------------------------------
 
@@ -63,7 +63,7 @@
 \section{Introduction} % Intro, what it does, applications, etc.
 	Schmitt triggers are used in a variety of applications from trigger inputs for microcontrollers to crude 1-bit DACs to oscillators. They can be built from a variety of components; namely, MOSFETs, BJTs, and discrete Operational Amplifiers. They work because of hysteresis, the output not being directly related to the input but rather dependent on the state of the system perviously, which allows the Schmitt trigger to output a high or low voltage based on two different threshold voltages.
 \section{Circuit Description} % Particular Schmitt Trigger setup
-	The specific Schmitt trigger circuit that we will be using is called the BJT Collector-base Coupled Non-Inverting Schmitt Trigger. It is comprised of 5 resistors and 2 BJTs in a formation that resembles a SRAM cell. The output voltage will be the voltage at the collector of Q2. The circuit diagram below shows how this circuit is built. Note that for simplicity, we will assume that R1 is equal to R2 and R3 is equal to R4. The values of the resistors are as follows: R1 and R2 are 1.1 k$\Omega$, R3 and R4 are 49.9 k$\Omega$, and R5 is 4.9 k$\Omega$. The BJTs used are the 2N23904 BJTs.
+	The specific Schmitt trigger circuit that we will be using is called the BJT Collector-base Coupled Non-Inverting Schmitt Trigger. It is comprised of 5 resistors and 2 BJTs in a configuration that resembles a SRAM cell. The output voltage will be the voltage at the collector of Q2. The circuit diagram below shows how this circuit is built. Note that for simplicity, we will assume that R1 is equal to R2 and R3 is equal to R4. The values of the resistors are as follows: R1 and R2 are 1.1 k$\Omega$, R3 and R4 are 49.9 k$\Omega$, and R5 is 4.9 k$\Omega$. The BJTs used are the 2N23904 BJTs.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_diagram.pdf}
@@ -117,20 +117,42 @@
 \section{Experiment 2: Schmitt Trigger Frequency Response Characterization}
 	\subsection{Experimental Setup}
 	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at 5 Hz. We measured the slew rate by measuring the slope of the rising edge of the signal on the output of the circuit from 10\% of the output voltage to 90\% of the output voltage. This value represents how fast the circuit can drive a change in voltage.
-	\[SR=\frac{t(0.9 V_{OH}) - t(0.1 V_{OH})}{2}\]
+	\[SR=\max\left(\frac{d}{dt}[V_{out}]\right)\]
 	The output swing was measured by getting the average output high value and subtracting it from the average output low value. This value tells us how much the output can vary in voltage.
 	\[V_{OS}=V_{OH}-V_{OL}\]
-	The switching sharpness was measured by taking the derivative of the output voltage and finding the maximum value of the derivative. This value represents how maximum rate at which the circuit can drive a change in voltage.
-	\[SS=max\left(\frac{d}{dt}[V_{out}]\right)\]
-	The propagation delay\\
+	The rise time and fall time were calculated by measuring the time between the start of the rise of the output voltage to the end of that rise. The same procedures were followed to measure fall time. The propagation delay is calculated by determining the time at which the input waveform reaches the threshold voltage of the circuit and subtracting that time from the time when the output starts to rise.\\
 	\\
-	\textit{Experiment Deliverables:} Plots showing the output Propagation Delay, Switching Sharpness, Slew Rate, and Output Swing for the given input signal.
+	\textit{Experiment Deliverables:} Plots showing the output Propagation Delay, Rise Time, Fall Time, Slew Rate, and Output Swing for the given input signal.
 	\subsection{Results}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp2_waveform_plot.pdf}
+		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
+		\label{fig:exp1_vin_vroufet}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp2_delay_plot.pdf}
+		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
+		\label{fig:exp1_vin_fvout}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp2_risefall_plot.pdf}
+		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
+		\label{fig:exp1_vin_vgout}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp2_slew_rate.pdf}
+		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
+		\label{fig:exp1_vin_vhout}
+	\end{figure}
 	\subsection{Analysis}
 	\subsection{Discussion}
 \section{Experiment 3: Schmitt Trigger Frequency Response Trends}
 	\subsection{Experimental Setup}
-	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at various frequencies between 5 Hz and 200 kHz. We wanted to see how the behavior of the circuit would change based on the input waveform frequency by measuring the propagation delay, switching sharpness, slew rate, and output swing. The propagation delay describes how long it takes for the circuit to respond to the input. The slew rate describes how long it takes the circuit to drive the output. The output swing describes the range of voltage the circuit can drive on the output side. The switching sharpness describes how clear the transition was between high and low.\\
+	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at various frequencies between 5 Hz and 200 kHz. We wanted to see how the behavior of the circuit would change based on the input waveform frequency by measuring the propagation delay, rise time, fall time, slew rate, and output swing. The propagation delay describes how long it takes for the circuit to respond to the input. The slew rate describes how long it takes the circuit to drive the output. The output swing describes the range of voltage the circuit can drive on the output side. The switching sharpness describes how clear the transition was between high and low.\\
 	\\
 	\textit{Experiment Deliverables:} Plots showing Hysteresis Curve/Loop, Propagation Delay, Switching Sharpness, Slew Rate, and Output Swing varying with Frequency; Plots of input and output waveforms at a low, medium, and high frequency.
 	\subsection{INCOMPLETE - Results}
@@ -157,11 +179,10 @@
 	This plot shows how the propagation delay increases as frequency increases.???
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_sharpness_plot.pdf}
-		\caption{Switching sharpness relationship with frequency.}
-		\label{fig:exp3_sharpness_plot}
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_rise_fall_time.pdf}
+		\caption{Propagation delay relationship with frequency.}
+		\label{fig:exp3_rise_fall_time_plot}
 	\end{figure}
-	This plot shows how the circuit's output becomes less sharp as the frequency increases. This is also because the circuit does not have enough time to drive the output high or low enough the higher the frequency becomes.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_hysteresis_loops.pdf}

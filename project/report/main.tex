@@ -61,7 +61,7 @@
 %----------------------------------------------------------
 
 \section{Introduction} % Intro, what it does, applications, etc.
-	Schmitt triggers are used in a variety of applications from trigger inputs for microcontrollers to crude 1-bit DACs to oscillators. They can be built from a variety of components; namely, MOSFETs, BJTs, and discrete Operational Amplifiers. They work because of hysteresis, the output not being directly related to the input but rather dependent on the state of the system perviously, which allows the Schmitt trigger to output a high or low voltage based on two different threshold voltages.
+	Schmitt triggers are used in a variety of applications from trigger inputs for microcontrollers to crude 1-bit DACs to oscillators. They can be built from a variety of components; namely, MOSFETs, BJTs, and discrete Operational Amplifiers. They work because of hysteresis, the output not being directly related to the input but rather dependent on the state of the system previously, which allows the Schmitt trigger to output a high or low voltage based on two different threshold voltages.
 \section{Circuit Description} % Particular Schmitt Trigger setup
 	The specific Schmitt trigger circuit that we will be using is called the BJT Collector-base Coupled Non-Inverting Schmitt Trigger. It is comprised of 5 resistors and 2 BJTs in a configuration that resembles a SRAM cell. The output voltage will be the voltage at the collector of Q2. The circuit diagram below shows how this circuit is built. Note that for simplicity, we will assume that R1 is equal to R2 and R3 is equal to R4. The values of the resistors are as follows: R1 and R2 are 1.1 k$\Omega$, R3 and R4 are 49.9 k$\Omega$, and R5 is 4.9 k$\Omega$. The BJTs used are the 2N23904 BJTs.
 	\begin{figure}[H]
@@ -71,7 +71,7 @@
 		\label{fig:circuit_schematic}
 	\end{figure}
 \section{Circuit Analysis}
-	Before building this circuit, we used LTSpice to simulate the circuit which allowed us to easily change the resistance values of in the circuit to see how the circuit would respond to a sine wave input. We observed the following:
+	Before building this circuit, we used LTSpice to simulate the circuit which allowed us to easily change the resistance values to see how it would respond to a sine wave input. We observed the following:
 	\begin{itemize}
 		\item The Output High Voltage is determined by the voltage divider ratio between R2 and R4 where they are a voltage divider.
 		\item There has to be a gap between the R1, R2 values and the R3, R4 values; R1, R2 must be smaller than R3, R4.
@@ -87,25 +87,25 @@
 	Using LTSpice, we swept the resistance values for each of the resistors in the circuit to determine the optimal resistor values for the circuit. Below are some plots that show this.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.6\linewidth]{/diagrams/project_ltspice_r1_sweep.pdf}
+		\includegraphics[width=0.9\linewidth]{/diagrams/project_ltspice_r1_sweep.pdf}
 		\caption{Sweep of $R_1$ values (which is also the same value for the R2 resistor but not the $R_2$ value) from 1 k$\Omega$ to 10 k$\Omega$. The horizontal lines are the output waveforms. The lines from the top to the bottom correspond to $R_1$ being 1 k$\Omega$ and increasing as the lines go down by 2 k$\Omega$.}
 		\label{fig:r1_sweep}
 	\end{figure}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.6\linewidth]{/diagrams/project_ltspice_r2_sweep.pdf}
+		\includegraphics[width=0.9\linewidth]{/diagrams/project_ltspice_r2_sweep.pdf}
 		\caption{Sweep of $R_2$ values (which corresponds to the R3 and R4 resistors) from 10 k$\Omega$ to 100 k$\Omega$. The horizontal lines are the output waveform. The lower the $R_2$ resistance, the lower the overall output voltage waveform was.}
 		\label{fig:r2_sweep}
 	\end{figure}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.6\linewidth]{/diagrams/project_ltspice_diagram.pdf}
+		\includegraphics[width=0.9\linewidth]{/diagrams/project_ltspice_rin_sweep.pdf}
 		\caption{Sweep of $R_{in}$ values from 1 k$\Omega$ to 10 k$\Omega$. There is not much of a change in the horizontal output waveform after the values of $R_{in}$ become smaller than 9 k$\Omega$.}
 		\label{fig:rin_sweep}
 	\end{figure}
 \section{Experiment 1: Schmitt Trigger Voltage Characterization}
 	\subsection{Experimental Setup}
-	In this experiment, we set up the circuit as shown in Figure \ref{fig:circuit_schematic} and measured the output voltage of the circuit. We swept the voltage from $V_{ee}$ (GND) to $V_{cc}$ and then back to $V_{ee}$. We are characterizing the Upper and Lower Threshold Voltages of the circuit (represented by $V_{UT}$ and $V_{LT}$ respectively) and then calculating the Hysteresis Voltage (represented by $V_{H}$) by subtracting the Upper Threshold Voltage from the Lower Threshold Voltage.
+	In this experiment, we set up the circuit as shown in Figure \ref{fig:circuit_schematic} and measured the output voltage of the circuit. We swept the voltage from $V_{ee}$ (GND) to $V_{cc}$ and then back to $V_{ee}$. We are characterizing the Upper and Lower Threshold Voltages of the circuit (represented by $V_{UT}$ and $V_{LT}$ respectively) and then calculating the Hysteresis Voltage (represented by $V_{H}$) by subtracting the Lower Threshold Voltage from the Upper Threshold Voltage.
 	\[V_{H}=V_{UT}-V_{LT}\]
 	With the same data, we also extracted the Output High and Low Voltage (represented by $V_{OH}$ and $V_{OL}$ respectively) by looking at what the average high voltage was and what the average low voltage was. Afterwards, we plotted the input voltage vs. the output voltage to get a hysteresis curve which shows us the output high and low voltages along with the low and high threshold voltages. This plot fully characterizes the voltage characteristics of the Schmitt trigger.\\
 	\\
@@ -113,13 +113,13 @@
 	\subsection{Results}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{/diagrams/project_exp1_vin_vout.pdf}
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp1_vin_vout.pdf}
 		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
 		\label{fig:exp1_vin_vout}
 	\end{figure}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{/diagrams/project_exp1_hysteresis_curve.pdf}
+		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp1_hysteresis_curve.pdf}
 		\caption{Hysteresis Curve of Schmitt Trigger.}
 		\label{fig:exp1_hysteresis_curve}
 	\end{figure}
@@ -142,9 +142,9 @@
 	This experiment shows how the Schmitt trigger works by having two different thresholds for its output voltages. This particular circuit essentially has a rail-to-rail output.
 \section{Experiment 2: Schmitt Trigger Frequency Response Characterization}
 	\subsection{Experimental Setup}
-	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at 50 kHz. We measured the slew rate by measuring the slope of the rising edge of the signal on the output of the circuit from 10\% of the output voltage to 90\% of the output voltage. This value represents how fast the circuit can drive a change in voltage.
-	\[SR=\max\left(\frac{d}{dt}[V_{out}]\right)\]
-	The output swing was measured by getting the average output high value and subtracting it from the average output low value. This value tells us how much the output can vary in voltage.
+	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at 50 kHz. We measured the sharpness by measuring the slope of the rising edge of the signal on the output of the circuit from 10\% of the output voltage to 90\% of the output voltage. This value represents how fast the circuit can drive a change in voltage.
+	\[S=\max\left(\frac{d}{dt}[V_{out}]\right)\]
+	The output swing was measured by getting the average low high value and subtracting it from the average output high value. This value tells us how much the output can vary in voltage.
 	\[V_{OS}=V_{OH}-V_{OL}\]
 	The rise time and fall time were calculated by measuring the time between the start of the rise of the output voltage to the end of that rise. The same procedures were followed to measure fall time. The propagation delay is calculated by determining the time at which the input waveform reaches the threshold voltage of the circuit and subtracting that time from the time when the output starts to rise.\\
 	\\
@@ -179,7 +179,7 @@
 	\end{figure}
 		The plot above shows how sharpness was extracted from the data. We computed the first derivative of the data to get the points at which the change in voltage was the largest and then took the maximum value of that subset to determine the sharpness.
 	\subsection{Analysis}
-	From the data we have collected, we can observe that the slew rates and other quantities are very consistent cycle after cycle. We also observed that the output overall was very consistent. All of the quantities we observed were very small which makes sense because this circuit responds very fast to changes in voltage.
+	From the data we have collected, we can observe that the sharpness and other quantities are very consistent cycle after cycle. We also observed that the output overall was very consistent. All of the quantities we observed were very small which makes sense because this circuit responds very fast to changes in voltage.
 	\subsection{Discussion}
 	For the experiment, we selected the 50 kHz waveform to be inputted so we could detect the propagation delay more easily. We found that at lower frequencies, the propagation delay was almost invisible. This makes sense because the higher the frequency we are inputting, the higher sampling rate we used. Due to the higher sampling rate, we got a higher resolution of data which made the delay visible on our plots.
 \section{Experiment 3: Schmitt Trigger Frequency Response Trends}
@@ -188,7 +188,7 @@
 	and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at various frequencies between 5 Hz and 200 kHz.
 	We wanted to see how the behavior of the circuit would change based on the input waveform frequency by measuring the 
 	propagation delay, rise time, fall time, sharpness, and output swing. The propagation delay describes how long it takes 
-	for the circuit to respond to the input. The sharpnes describes the steepest curve. The output 
+	for the circuit to respond to the input. The sharpness describes the steepest curve. The output 
 	swing describes the range of voltage the circuit can drive on the output side. The switching sharpness describes how clear 
 	the transition was between high and low.\\
 	\\
@@ -200,35 +200,35 @@
 		\caption{Sharpness relationship with frequency.}
 		\label{fig:exp3_slew_plot}
 	\end{figure}
-	Figure \ref{fig:exp3_slew_plot}: The measured sharpness of the output transitions increases as the input frequency increases. Jumps in the data are visible at the start of every frequency decade.
+	In figure \ref{fig:exp3_slew_plot}, the measured sharpness of the output transitions increases as the input frequency increases. Jumps in the data are visible at the start of every frequency decade.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_swing_plot.pdf}
 		\caption{Output swing relationship with frequency.}
 		\label{fig:exp3_swing_plot}
 	\end{figure}
-	Figure \ref{fig:exp3_swing_plot}: The output voltage swing decreases as frequency increases, with a notable and rapid drop beginning around 10 kHz.
+	In figure \ref{fig:exp3_swing_plot}, the output voltage swing decreases as frequency increases, with a notable and rapid drop beginning around 10 kHz.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_delay_plot.pdf}
 		\caption{Propagation delay relationship with frequency.}
 		\label{fig:exp3_delay_plot}
 	\end{figure}
-	Figure \ref{fig:exp3_delay_plot}: The propagation delay decreases overall as the frequency of the input signal scales up.
+	In figure \ref{fig:exp3_delay_plot}, the propagation delay decreases overall as the frequency of the input signal scales up.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_rise_fall_time.pdf}
 		\caption{Rise and fall time relationship with frequency.}
 		\label{fig:exp3_rise_fall_time_plot}
 	\end{figure}
-	Figure \ref{fig:exp3_rise_fall_time_plot}: Both rise and fall times decrease at higher frequencies. They track each other very closely for most frequencies, though at the highest measured frequencies, the rise time becomes slightly longer than the fall time
+	In figure \ref{fig:exp3_rise_fall_time_plot}, both rise and fall times decrease at higher frequencies. They track each other very closely for most frequencies, though at the highest measured frequencies, the rise time becomes slightly longer than the fall time
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_hysteresis_loops.pdf}
 		\caption{Hysteresis loop relationship with frequency.}
 		\label{fig:exp3_hysteresis_loops}
 	\end{figure}
-	Figure \ref{fig:exp3_hysteresis_loops}: As frequency increases from 100 Hz to 100 kHz, the hysteresis loops widen significantly, and the vertical transitions become visibly less steep.
+	In figure \ref{fig:exp3_hysteresis_loops}, as frequency increases from 100 Hz to 100 kHz, the hysteresis loops widen significantly, and the vertical transitions become visibly less steep.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_waveform_1.pdf}
@@ -248,7 +248,7 @@
 		\label{fig:exp3_waveform_high}
 	\end{figure}
 
-	Figures \ref{fig:exp3_waveform_slow}-\ref{fig:exp3_waveform_high}:
+	In figures \ref{fig:exp3_waveform_slow}-\ref{fig:exp3_waveform_high}:
 	\begin{itemize}
 		\item {At 100 Hz (\ref{fig:exp3_waveform_slow}):} The output waveform is a clean, sharp square wave that transitions almost instantly relative to the period.
 		\item {At 50 kHz (\ref{fig:exp3_waveform_medium}):} The output still largely maintains its square shape, but the transitions take up a more visible portion of the signal's period.
@@ -269,7 +269,7 @@
 	In experiment 3, we wanted to characterize the limits of the BJT Schmitt trigger by evaluating its frequency response from 5 Hz through 200kHz. The data shows that the while the circuit functions effectively at lower frequencies
 	with sharp, near rail to rail transitions, its performance does degrade as frequency is scaled up. The most significant thing we observed is reduction in output swing. 
 	Because the circuit requires a finite amount of time to switch states, higher frequency inputs force another transition before the output can reach
-	its high or low levels. Furthermore, the physical limitations of the components becomes very apparent in the hystersis loop. The widening of the loop and the slanting of
+	its high or low levels. Furthermore, the physical limitations of the components becomes very apparent in the hysteresis loop. The widening of the loop and the slanting of
 	its transitions at higher frequencies shows the impacts of delay and switching speeds. The input voltage continues to change along the x-axis while the output is still transitioning, which effectively stretches the switching threshold outward.
 	We also saw a minor asymmetry in the switching dynamics at the high frequencies, where rise times became slightly longer than fall times. This suggests that turn on is hindered by the
 	time required to charge parasitic capacitance through the base resistors. 

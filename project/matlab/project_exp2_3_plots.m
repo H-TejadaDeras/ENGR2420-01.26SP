@@ -81,33 +81,32 @@ fall_s  = movmean(results.fall_time, w);
 % plot slew rate vs frequency
 figure;
 semilogx(freq_s, slew_s, 'o-');
-xlabel('frequency (hz)');
-ylabel('slew rate (v/s)');
-title('frequency vs slew rate');
+xlabel('Frequency (Hz)');
+ylabel('Slew Rate (V/s)');
+title('Frequency vs Slew Rate');
 
 % plot output swing vs frequency
 figure;
 semilogx(freq_s, swing_s, 'o-');
-xlabel('frequency (hz)');
-ylabel('output swing (v)');
-title('frequency vs output swing');
+xlabel('Frequency (Hz)');
+ylabel('Output Swing (V)');
+title('Frequency vs Output Swing');
 
 % plot propagation delay vs frequency
 figure;
 semilogx(freq_s, delay_s, 'o-');
-xlabel('frequency (hz)');
-ylabel('propagation delay (s)');
-title('frequency vs delay');
+xlabel('Frequency (Hz)');
+ylabel('Propagation Delay (s)');
+title('Frequency vs Delay');
 
 % plot rise and fall time vs frequency
 figure;
 semilogx(freq_s, rise_s, 'o-'); hold on;
 semilogx(freq_s, fall_s, 's-');
-xlabel('frequency (hz)');
-ylabel('time (s)');
-title('frequency vs rise / fall time');
-legend('rise time','fall time');
-
+xlabel('Frequency (Hz)');
+ylabel('Time (s)');
+title('Frequency vs Rise / Fall Time');
+legend('Rise Time','Fall Time');
 
 % slew and swing calculation
 function [slew, swing] = slew_swing_calcs(Vout, dVout)

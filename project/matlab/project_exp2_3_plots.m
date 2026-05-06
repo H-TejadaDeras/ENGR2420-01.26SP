@@ -298,8 +298,8 @@ figure
 plot(t, Vin, '.'); hold on
 plot(t, Vout, '.')
 yline(v_thresh)
-plot(t_in, v_thresh*ones(size(t_in)), 'o')
-plot(t_out, v_thresh*ones(size(t_out)), 'x')
+plot(t_in, v_thresh*ones(size(t_in)), 'o', 'MarkerSize',7, 'LineWidth', 2)
+plot(t_out, v_thresh*ones(size(t_out)), 'x', 'MarkerSize',7, 'LineWidth', 2)
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 title('Propagation Delay Extraction')

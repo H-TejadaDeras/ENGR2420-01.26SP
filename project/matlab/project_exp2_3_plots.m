@@ -3,6 +3,7 @@
 clear;
 
 base_dir = "C:\Users\etuthill\OneDrive - Olin College of Engineering\Circuits\ENGR2410-01.26SP\project\matlab\project_exp3";
+%base_dir = '/home/htejadaderas/Git/ENGR2420-01.26SP/project/matlab/project_exp3/1 kHz/NewFile1.csv';
 
 % list of all folders in dataset directory
 folders = dir(base_dir);
@@ -69,7 +70,7 @@ end
 results = sortrows(results,'freq');
 
 % smooth 
-w = 3;
+w = 15;
 freq_s  = results.freq;
 slew_s  = movmean(results.slew, w);
 swing_s = movmean(results.swing, w);
@@ -220,5 +221,4 @@ function rise_fall = rise_fall_calc(t, Vout, dVout, freq)
     rise_fall.end_rise = end_rise;
     rise_fall.start_fall = start_fall;
     rise_fall.end_fall = end_fall;
-    
 end

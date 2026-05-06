@@ -262,19 +262,19 @@
 
 	Overall, the propagation delay decreases as the frequency increases. This happens because the steeper slope of higher frequency input signals drives the transistors through their active regions much faster, which reduces the time the circuit is in transition. As frequency increases, rise and fall time also decrease. The time needed for the output to transition between the 10\% and 90\% voltage thresholds decreases as frequency scales up. This is a consequence of the increasing sharpness, as a faster voltage transition naturally takes less time to complete. 
 
-	Notably, the rise and fall times track each other for most frequencies, except at the very highest frequencies where rise time is greater than fall times. This suggests minor asymmetry in the switching dynamics. In our configuration, the turn-on process might be slowed down by the time required to charge the parasitic capacitances through the 49.9 k\(\Omega\) base resistors, $R_3$ and $R_4$. On the other hand, the turn-off process might be faster because the transistor being driven into saturation can pull the output down more aggressively than the passive pull-up resistor can raise it. However, for frequencies below around 100 kHz, this does not have a noticeable impact, suggesting symmetry.
+	Notably, the rise and fall times track each other for most frequencies, except at the very highest frequencies where rise time is greater than fall times. This suggests minor asymmetry in the switching dynamics. In our configuration, the turn-on process might be slowed down by the time required to charge the parasitic capacitance through the 49.9 k\(\Omega\) base resistors, $R_3$ and $R_4$. On the other hand, the turn-off process might be faster because the transistor being driven into saturation can pull the output down more aggressively than the passive pull-up resistor can raise it. However, for frequencies below around 100 kHz, this does not have a noticeable impact, suggesting symmetry.
 
 	As the frequency increases, the hysteresis loop becomes notably wider, and its vertical transitions become visibly less steep. This widening is driven by the combination of the finite switching speed and propagation delay. Because it takes time for the output to react and change states, a rapidly changing high-frequency input continues to shift along the x-axis during the transition. As a result, the apparent switching points shift outward, stretching the hysteresis loop.
 	\subsection{Discussion}
 	In experiment 3, we wanted to characterize the limits of the BJT Schmitt trigger by evaluating its frequency response from 5 Hz through 200kHz. The data shows that the while the circuit functions effectively at lower frequencies
 	with sharp, near rail to rail transitions, its performance does degrade as frequency is scaled up. The most significant thing we observed is reduction in output swing. 
 	Because the circuit requires a finite amount of time to switch states, higher frequency inputs force another transition before the output can reach
-	its high or low levels. Furthermore, the physical limitations of the components becomes very apparent in the hystersis loop. THe widening of the loop and the slanting of
+	its high or low levels. Furthermore, the physical limitations of the components becomes very apparent in the hystersis loop. The widening of the loop and the slanting of
 	its transitions at higher frequencies shows the impacts of delay and switching speeds. The input voltage continues to change along the x-axis while the output is still transitioning, which effectively stretches the switching threshold outward.
 	We also saw a minor asymmetry in the switching dynamics at the high frequencies, where rise times became slightly longer than fall times. This suggests that turn on is hindered by the
-	time required to charge parasitic capacintance through the base resistors. 
+	time required to charge parasitic capacitance through the base resistors. 
 	Finally, it's important to note that our measurements were impacted by our testing equipment. The jumps seen at the start of every decade in both sharpness and swing
-	are artiefacts of the oscilloscope. As frequency increased. the oscilloscope increased its sampling rate to maintain resolution which impacted the transition magntitudes. Despite these artifacts, the
+	are artifacts of the oscilloscope. As frequency increased. the oscilloscope increased its sampling rate to maintain resolution which impacted the transition magnitudes. Despite these artifacts, the
 	overall trends confirm the circuit's utility as a reliable, fast-switching Schmitt trigger except at extreme frequencies.
 	
 \section{Summary} % Learnings and things

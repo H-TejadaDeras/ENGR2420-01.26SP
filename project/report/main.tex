@@ -116,7 +116,7 @@
 	This experiment shows how the Schmitt trigger works by having two different thresholds for its output voltages. This particular circuit essentially has a rail-to-rail output.
 \section{Experiment 2: Schmitt Trigger Frequency Response Characterization}
 	\subsection{Experimental Setup}
-	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at 5 Hz. We measured the slew rate by measuring the slope of the rising edge of the signal on the output of the circuit from 10\% of the output voltage to 90\% of the output voltage. This value represents how fast the circuit can drive a change in voltage.
+	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at 50 kHz. We measured the slew rate by measuring the slope of the rising edge of the signal on the output of the circuit from 10\% of the output voltage to 90\% of the output voltage. This value represents how fast the circuit can drive a change in voltage.
 	\[SR=\max\left(\frac{d}{dt}[V_{out}]\right)\]
 	The output swing was measured by getting the average output high value and subtracting it from the average output low value. This value tells us how much the output can vary in voltage.
 	\[V_{OS}=V_{OH}-V_{OL}\]
@@ -126,30 +126,32 @@
 	\subsection{Results}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp2_waveform_plot.pdf}
-		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
-		\label{fig:exp1_vin_vroufet}
+		\includegraphics[width=0.7\linewidth]{/diagrams/project_exp2_waveform_plot.pdf}
+		\caption{Input and output waveform for circuit.}
+		\label{fig:exp2_waveform}
 	\end{figure}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp2_delay_plot.pdf}
-		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
-		\label{fig:exp1_vin_fvout}
+		\includegraphics[width=0.8\linewidth]{/diagrams/project_exp2_delay_plot.pdf}
+		\caption{Extraction method used to get propagation delay of the circuit.}
+		\label{fig:exp2_delay}
 	\end{figure}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp2_risefall_plot.pdf}
-		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
-		\label{fig:exp1_vin_vgout}
+		\includegraphics[width=0.8\linewidth]{/diagrams/project_exp2_risefall_plot.pdf}
+		\caption{Plot of values used (between dashed lines) to calculate the rising and falling rate of the output waveform.}
+		\label{fig:exp2_rise_fall}
 	\end{figure}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp2_slew_rate.pdf}
-		\caption{Voltage behavior of Schmitt Trigger. Notice how the circuit transitions to output low at a lower threshold than when it transitions to output high.}
-		\label{fig:exp1_vin_vhout}
+		\includegraphics[width=0.8\linewidth]{/diagrams/project_exp2_slew_rate.pdf}
+		\caption{Slew rate extraction from circuit output.}
+		\label{fig:exp2_slew}
 	\end{figure}
 	\subsection{Analysis}
+	
 	\subsection{Discussion}
+	For the experiment, we selected the 50 kHz waveform to be inputted so we could detect the propagation delay more easily. We found that at lower frequencies, the propagation delay was almost invisible. This makes sense because the higher the frequency we are inputting, the higher sampling rate we used. Due to the higher sampling rate, we got a higher resolution of data which made the delay visible on our plots or at least allow us to calculate it.
 \section{Experiment 3: Schmitt Trigger Frequency Response Trends}
 	\subsection{Experimental Setup}
 	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at various frequencies between 5 Hz and 200 kHz. We wanted to see how the behavior of the circuit would change based on the input waveform frequency by measuring the propagation delay, rise time, fall time, slew rate, and output swing. The propagation delay describes how long it takes for the circuit to respond to the input. The slew rate describes how long it takes the circuit to drive the output. The output swing describes the range of voltage the circuit can drive on the output side. The switching sharpness describes how clear the transition was between high and low.\\

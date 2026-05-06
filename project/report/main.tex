@@ -70,13 +70,15 @@
 		\caption{BJT Collector-base Coupled Non-Inverting Schmitt Trigger Circuit.}
 		\label{fig:circuit_schematic}
 	\end{figure}
-\section{INCOMPLETE - Circuit Analysis}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Circuit Analysis}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	Before building this circuit, we used LTSpice to simulate the circuit which allowed us to easily change the resistance values of in the circuit to see how the circuit would respond to a sine wave input. We observed the following:
 	\begin{itemize}
 		\item The Output High Voltage is determined by the voltage divider ratio between R2 and R4 where they are a voltage divider.
 		\item There has to be a gap between the R1, R2 values and the R3, R4 values; R1, R2 must be smaller than R3, R4.
 		\item When Q1 or Q2 turns on, it sucks current from the other base of other BJT and turns the other BJT off at the same time.
 	\end{itemize}
+	Below is our circuit diagram for the circuit 
+upSTL ni eda
 \section{Experiment 1: Schmitt Trigger Voltage Characterization}
 	\subsection{Experimental Setup}
 	In this experiment, we set up the circuit as shown in Figure \ref{fig:circuit_schematic} and measured the output voltage of the circuit. We swept the voltage from $V_{ee}$ (GND) to $V_{cc}$ and then back to $V_{ee}$. We are characterizing the Upper and Lower Threshold Voltages of the circuit (represented by $V_{UT}$ and $V_{LT}$ respectively) and then calculating the Hysteresis Voltage (represented by $V_{H}$) by subtracting the Upper Threshold Voltage from the Lower Threshold Voltage.
@@ -122,7 +124,7 @@
 	\[V_{OS}=V_{OH}-V_{OL}\]
 	The rise time and fall time were calculated by measuring the time between the start of the rise of the output voltage to the end of that rise. The same procedures were followed to measure fall time. The propagation delay is calculated by determining the time at which the input waveform reaches the threshold voltage of the circuit and subtracting that time from the time when the output starts to rise.\\
 	\\
-	\textit{Experiment Deliverables:} Plots showing the output Propagation Delay, Rise Time, Fall Time, Slew Rate, and Output Swing for the given input signal.
+	\textit{Experiment Deliverables:} Plots showing the output Propagation Delay, Rise Time, Fall Time, Sharpess, and Output Swing for the given input signal.
 	\subsection{Results}
 	\begin{figure}[H]
 		\centering
@@ -130,68 +132,79 @@
 		\caption{Input and output waveform for circuit.}
 		\label{fig:exp2_waveform}
 	\end{figure}
+	The plot above is here to provide context for the input and output waveforms of the circuit. The input waveform was a 50 kHz sine wave with a 50 \% duty cycle.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{/diagrams/project_exp2_delay_plot.pdf}
 		\caption{Extraction method used to get propagation delay of the circuit.}
 		\label{fig:exp2_delay}
 	\end{figure}
+	The propagation delay is calculated by the difference in time between the yellow circles to the purple crosses. Notice how they are very close to each other. It makes sense for the points to be close to each other since the propagation delay is ideally very small.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{/diagrams/project_exp2_risefall_plot.pdf}
 		\caption{Plot of values used (between dashed lines) to calculate the rising and falling rate of the output waveform.}
 		\label{fig:exp2_rise_fall}
 	\end{figure}
+	The rise time and fall time is calculated as the time it takes for the circuit output waveform to switch from the output low to the output high voltage.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{/diagrams/project_exp2_slew_rate.pdf}
-		\caption{Slew rate extraction from circuit output.}
+		\caption{Sharpness extraction from circuit output.}
 		\label{fig:exp2_slew}
 	\end{figure}
+		The plot above shows how sharpness was extracted from the data. We computed the first derivative of the data to get the points at which the change in voltage was the largest and then took the maximum value of that subset to determine the sharpness.
 	\subsection{Analysis}
-	
+	From the data we have collected, we can observe that the slew rates and other quantities are very consistent cycle after cycle. We also observed that the output overall was very consistent. All of the quantities we observed were very small which makes sense because this circuit responds very fast to changes in voltage.
 	\subsection{Discussion}
-	For the experiment, we selected the 50 kHz waveform to be inputted so we could detect the propagation delay more easily. We found that at lower frequencies, the propagation delay was almost invisible. This makes sense because the higher the frequency we are inputting, the higher sampling rate we used. Due to the higher sampling rate, we got a higher resolution of data which made the delay visible on our plots or at least allow us to calculate it.
+	For the experiment, we selected the 50 kHz waveform to be inputted so we could detect the propagation delay more easily. We found that at lower frequencies, the propagation delay was almost invisible. This makes sense because the higher the frequency we are inputting, the higher sampling rate we used. Due to the higher sampling rate, we got a higher resolution of data which made the delay visible on our plots.
 \section{Experiment 3: Schmitt Trigger Frequency Response Trends}
 	\subsection{Experimental Setup}
-	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at various frequencies between 5 Hz and 200 kHz. We wanted to see how the behavior of the circuit would change based on the input waveform frequency by measuring the propagation delay, rise time, fall time, slew rate, and output swing. The propagation delay describes how long it takes for the circuit to respond to the input. The slew rate describes how long it takes the circuit to drive the output. The output swing describes the range of voltage the circuit can drive on the output side. The switching sharpness describes how clear the transition was between high and low.\\
+	In this experiment, we used the circuit as shown in Figure \ref{fig:circuit_schematic} 
+	and inputted a 2.5 $V_{DC}$ offset, 50\% duty cycle sine wave at various frequencies between 5 Hz and 200 kHz.
+	We wanted to see how the behavior of the circuit would change based on the input waveform frequency by measuring the 
+	propagation delay, rise time, fall time, sharpness, and output swing. The propagation delay describes how long it takes 
+	for the circuit to respond to the input. The sharpnes describes the steepest curve. The output 
+	swing describes the range of voltage the circuit can drive on the output side. The switching sharpness describes how clear 
+	the transition was between high and low.\\
 	\\
-	\textit{Experiment Deliverables:} Plots showing Hysteresis Curve/Loop, Propagation Delay, Switching Sharpness, Slew Rate, and Output Swing varying with Frequency; Plots of input and output waveforms at a low, medium, and high frequency.
-	\subsection{INCOMPLETE - Results}
+	\textit{Experiment Deliverables:} Plots showing Hysteresis Curve/Loop, Propagation Delay, Switching Sharpness, and Output Swing varying with Frequency; Plots of input and output waveforms at a low, medium, and high frequency.
+	\subsection{Results}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_slew_plot.pdf}
-		\caption{Slew rate relationship with frequency.}
+		\caption{Sharpness relationship with frequency.}
 		\label{fig:exp3_slew_plot}
 	\end{figure}
-	This plot shows how the slew rate changes with frequency. The slew rate decreases because the circuit has less time to drive up or down the circuit for a given period the higher the frequency becomes.
+	Figure \ref{fig:exp3_slew_plot}: The measured sharpness of the output transitions increases as the input frequency increases. Jumps in the data are visible at the start of every frequency decade.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_swing_plot.pdf}
 		\caption{Output swing relationship with frequency.}
 		\label{fig:exp3_swing_plot}
 	\end{figure}
-	This plot shows how the output swing decreases with frequency. This is because at higher frequencies, the circuit does not have enough time to drive the output high enough to it's theoretical output high voltage or low enough to its theoretical output low voltage.
+	Figure \ref{fig:exp3_swing_plot}: The output voltage swing decreases as frequency increases, with a notable and rapid drop beginning around 10 kHz.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_delay_plot.pdf}
 		\caption{Propagation delay relationship with frequency.}
 		\label{fig:exp3_delay_plot}
 	\end{figure}
-	This plot shows how the propagation delay increases as frequency increases.???
+	Figure \ref{fig:exp3_delay_plot}: The propagation delay decreases overall as the frequency of the input signal scales up.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_rise_fall_time.pdf}
-		\caption{Propagation delay relationship with frequency.}
+		\caption{Rise and fall time relationship with frequency.}
 		\label{fig:exp3_rise_fall_time_plot}
 	\end{figure}
+	Figure \ref{fig:exp3_rise_fall_time_plot}: Both rise and fall times decrease at higher frequencies. They track each other very closely for most frequencies, though at the highest measured frequencies, the rise time becomes slightly longer than the fall time
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_hysteresis_loops.pdf}
 		\caption{Hysteresis loop relationship with frequency.}
 		\label{fig:exp3_hysteresis_loops}
 	\end{figure}
-	As the frequency increases, the hysteresis loop becomes less and less sharp and becomes wider. This is because of how the slew rate and propagation delay change as frequency increases. As the slew rate decreases, the less steep the slope of the change from output high to output low and vice versa are. The larger the propagation delay, the wider the hysteresis loop becomes. The switching points shift due to time delay, because the input continues changing during the delay. 
+	Figure \ref{fig:exp3_hysteresis_loops}: As frequency increases from 100 Hz to 100 kHz, the hysteresis loops widen significantly, and the vertical transitions become visibly less steep.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\linewidth]{/diagrams/project_exp3_waveform_1.pdf}
@@ -210,10 +223,36 @@
 		\caption{High frequency waveform input output relationship.}
 		\label{fig:exp3_waveform_high}
 	\end{figure}
+
+	Figures \ref{fig:exp3_waveform_slow}-\ref{fig:exp3_waveform_high}:
+	\begin{itemize}
+		\item {At 100 Hz (\ref{fig:exp3_waveform_slow}):} The output waveform is a clean, sharp square wave that transitions almost instantly relative to the period.
+		\item {At 50 kHz (\ref{fig:exp3_waveform_medium}):} The output still largely maintains its square shape, but the transitions take up a more visible portion of the signal's period.
+		\item {At 100 kHz (\ref{fig:exp3_waveform_high}):} The waveform's shape is noticeably altered. While the output still successfully reaches the upper and lower voltage states, the rise and fall times now consume a significant fraction of the signal's total period, giving the edges a pronounced slant.
+	\end{itemize}
 	\subsection{Analysis}
-	As the frequency increases past 10 kHz, the output of the circuit starts to struggle to reach the output high and low values. By 100 kHz, the slowness of the change in output voltage becomes more noticeable. This helps explain why Schmitt triggers are rated for certain speeds, at very high speeds they stop working as expected.
+	
+	The sharpness increases at higher frequencies due to a combination of physical circuit dynamics and measurement resolution. Physically as frequency rises, the input slope becomes steeper, driving the transistors through their switching region faster. However, there are sharp transitions that can be seen at the start of every decade which are artifacts of the oscilloscope settings. At these intervals, the oscilloscope increased its sampling rate to maintain resolution, which resulted in a smaller time increment. This allowed for more accurate peak switching speed measurements at higher frequencies. These jumps show that while physical sharpness does increase with frequency, the recorded magnitude is influenced by the sampling resolution of the equipment.
+
+	The output swing decreases with frequency, becoming especially apparent after around 10 kHz. At higher frequencies, the circuit does not have enough time to drive the output up to its theoretical high voltage or down to its theoretical low voltage before the input signal forces another transition. The same artifacting observed in the sharpness data can also be seen in the output swing measurements.
+
+	Overall, the propagation delay decreases as the frequency increases. This happens because the steeper slope of higher frequency input signals drives the transistors through their active regions much faster, which reduces the time the circuit is in transition. As frequency increases, rise and fall time also decrease. The time needed for the output to transition between the 10\% and 90\% voltage thresholds decreases as frequency scales up. This is a consequence of the increasing sharpness, as a faster voltage transition naturally takes less time to complete. 
+
+	Notably, the rise and fall times track each other for most frequencies, except at the very highest frequencies where rise time is greater than fall times. This suggests minor asymmetry in the switching dynamics. In our configuration, the turn-on process might be slowed down by the time required to charge the parasitic capacitances through the 49.9 k\(\Omega\) base resistors, $R_3$ and $R_4$. On the other hand, the turn-off process might be faster because the transistor being driven into saturation can pull the output down more aggressively than the passive pull-up resistor can raise it. However, for frequencies below around 100 kHz, this does not have a noticeable impact, suggesting symmetry.
+
+	As the frequency increases, the hysteresis loop becomes notably wider, and its vertical transitions become visibly less steep. This widening is driven by the combination of the finite switching speed and propagation delay. Because it takes time for the output to react and change states, a rapidly changing high-frequency input continues to shift along the x-axis during the transition. As a result, the apparent switching points shift outward, stretching the hysteresis loop.
 	\subsection{Discussion}
-	In most of the figures (specifically Figures \ref{fig:exp3_slew_plot} through \ref{fig:exp3_hysteresis_loops}), we observed jagged corners. We think this may be because of the sampling rate of the oscilloscope used when measuring the voltage at the input and output of the circuit because it was changed about every decade around the frequency where we observe the corner. This is because the sampling rate determines the resolution of the samples (and how far apart they are in time) which would affect the rates calculated using those time increments. In addition, these jumps occur around the same frequencies across all of the plots which points towards this being a measurement error.
+	In experiment 3, we wanted to characterize the limits of the BJT Schmitt trigger by evaluating its frequency response from 5 Hz through 200kHz. The data shows that the while the circuit functions effectively at lower frequencies
+	with sharp, near rail to rail transitions, its performance does degrade as frequency is scaled up. The most significant thing we observed is reduction in output swing. 
+	Because the circuit requires a finite amount of time to switch states, higher frequency inputs force another transition before the output can reach
+	its high or low levels. Furthermore, the physical limitations of the components becomes very apparent in the hystersis loop. THe widening of the loop and the slanting of
+	its transitions at higher frequencies shows the impacts of delay and switching speeds. The input voltage continues to change along the x-axis while the output is still transitioning, which effectively stretches the switching threshold outward.
+	We also saw a minor asymmetry in the switching dynamics at the high frequencies, where rise times became slightly longer than fall times. This suggests that turn on is hindered by the
+	time required to charge parasitic capacintance through the base resistors. 
+	Finally, it's important to note that our measurements were impacted by our testing equipment. The jumps seen at the start of every decade in both sharpness and swing
+	are artiefacts of the oscilloscope. As frequency increased. the oscilloscope increased its sampling rate to maintain resolution which impacted the transition magntitudes. Despite these artifacts, the
+	overall trends confirm the circuit's utility as a reliable, fast-switching Schmitt trigger except at extreme frequencies.
+	
 \section{Summary} % Learnings and things
 	In this lab, we learned a lot about how the characteristics of the Schmitt trigger change with the selection of resistors used and input waveform frequency. The particular Schmitt trigger that we are using is usable until about 200 kHz but starts showing issues with its output around 100 kHz. We also learned that the particular resistors that we used affected the output high and low voltages a lot.
 \section{Sources} % Sources for info and stuff
